@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="FlashGuard AI turns rainfall forecasts into street-level flood predictions and actions, before the water arrives.">
+<meta name="description" content="FlashGuard AI turns flood forecasts into street-level decisions for residents, councils and SES, before the water arrives.">
 <meta name="theme-color" content="#05080d">
 <meta property="og:title" content="FlashGuard AI · Before the water">
-<meta property="og:description" content="Street-level flash flood decisions for residents, councils and SES.">
+<meta property="og:description" content="Street-level flood decisions, check-ins and rescue triage for Australian communities.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='10' fill='%2305080d'/%3E%3Cpath d='M24 6 39 11.5v12c0 9.5-6.6 16.6-15 19.9C15.6 40.1 9 33 9 23.5v-12z' fill='none' stroke='%239fdcff' stroke-width='3'/%3E%3Cpath d='M15 27c3-2.4 6-2.4 9 0s6 2.4 9 0' fill='none' stroke='%239fdcff' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
 <title>FlashGuard</title>
@@ -238,6 +238,87 @@ table.infra th.num{text-align:right}
 .climate{font-size:12.5px;color:var(--mute);border-left:2px solid var(--water);padding-left:12px;margin:0}
 .foot{font-size:11px;color:var(--dim);padding-bottom:6px}
 
+
+/* ---------- place switch ---------- */
+.places{display:flex;gap:3px;background:var(--raise);border:1px solid var(--line);border-radius:13px;padding:3px}
+.plc{border:0;background:none;color:var(--mute);border-radius:10px;padding:6px 11px;font-size:12.5px;font-weight:560;cursor:pointer;text-align:left;line-height:1.15;transition:background .25s,color .25s}
+.plc small{display:block;font:500 9.5px/1.3 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.plc:hover{color:var(--fg)}
+.plc[aria-pressed="true"]{background:rgba(255,255,255,.09);color:var(--fg)}
+.plc[aria-pressed="true"] small{color:var(--water-2)}
+.place-card{left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;background:rgba(5,8,13,.74);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line2);border-radius:22px;padding:22px 30px;animation:pc 2.8s var(--ease) both;max-width:calc(100% - 32px)}
+@keyframes pc{0%{opacity:0;transform:translate(-50%,-44%)}14%,78%{opacity:1;transform:translate(-50%,-50%)}100%{opacity:0;transform:translate(-50%,-52%)}}
+.place-card span{font:500 11px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--water-2)}
+.place-card b{display:block;margin:10px 0 6px;font:400 34px/1.05 var(--f-display)}
+.place-card p{margin:0;color:var(--mute);font-size:13px}
+
+/* ---------- check-in ---------- */
+.checkin{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.big-btn{border-radius:18px;padding:16px;border:1px solid;cursor:pointer;text-align:left;display:grid;gap:4px;font-weight:620;font-size:15.5px;transition:transform .2s var(--ease),background .2s}
+.big-btn:active{transform:scale(.97)}
+.big-btn small{font-weight:400;font-size:12px;color:var(--mute)}
+.big-btn.safe{background:rgba(60,216,162,.1);border-color:rgba(60,216,162,.42);color:#a9f3d9}
+.big-btn.safe:hover{background:rgba(60,216,162,.16)}
+.big-btn.help{background:rgba(255,79,97,.12);border-color:rgba(255,79,97,.5);color:#ffbac1}
+.big-btn.help:hover{background:rgba(255,79,97,.18)}
+.form{display:grid;gap:16px;border:1px solid rgba(255,79,97,.38);border-radius:20px;padding:18px;background:rgba(255,79,97,.05)}
+.form h4{margin:0;font-size:15px;font-weight:620}
+.field{display:grid;gap:8px}
+.field .lbl{font:500 10.5px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.stepper{display:flex;align-items:center;gap:14px}
+.stepper button{width:38px;height:38px;border-radius:50%;border:1px solid var(--line2);background:none;cursor:pointer;font-size:18px;line-height:1}
+.stepper button:hover{background:rgba(255,255,255,.06)}
+.stepper output{font:300 28px/1 var(--f-ui);min-width:30px;text-align:center;font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{padding:7px 12px;border-radius:999px;border:1px solid var(--line2);background:none;color:var(--mute);font-size:12.5px;cursor:pointer;transition:background .2s,color .2s}
+.chip:hover{color:var(--fg)}
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--ink);border-color:var(--fg)}
+.form-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn.danger{background:var(--crit);border-color:var(--crit);color:#fff}
+.btn.danger:hover{background:#ff6878}
+.status-card{border-radius:20px;padding:18px;border:1px solid var(--line2);background:var(--surface);display:grid;gap:12px}
+.status-card.safe{border-color:rgba(60,216,162,.4);background:linear-gradient(160deg,rgba(60,216,162,.12),transparent 60%),var(--surface)}
+.status-card .hd{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.status-card .hd b{font-size:15px;font-weight:620}
+.status-card .eta{font:200 44px/1 var(--f-ui);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.status-card .eta small{font-size:15px;color:var(--mute);margin-left:6px}
+.status-card p{margin:0;font-size:13px;color:var(--mute)}
+.track{display:grid}
+.stp{display:grid;grid-template-columns:22px 1fr auto;gap:10px;align-items:start;padding:7px 0;font-size:13px;color:var(--dim)}
+.stp i{width:12px;height:12px;border-radius:50%;border:2px solid var(--dim);margin:4px 0 0 4px}
+.stp.done{color:var(--fg)}
+.stp.done i{background:var(--ok);border-color:var(--ok)}
+.stp.now{color:#ffd38e}
+.stp.now i{border-color:var(--warn);background:var(--warn);box-shadow:0 0 0 5px rgba(255,178,62,.18)}
+.stp time{font:500 11px/1.6 var(--f-mono);color:var(--mute)}
+
+/* ---------- alert delivery ---------- */
+.deliver{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;border:1px solid var(--line);border-radius:20px;padding:16px;background:var(--surface)}
+.phone{width:100%;max-width:290px;margin-inline:auto;border-radius:36px;background:#0b1018;padding:12px 12px 16px;box-shadow:0 24px 60px rgba(0,0,0,.55),inset 0 0 0 1px rgba(150,182,224,.22),inset 0 0 0 6px #05080d}
+.phone .notch{width:86px;height:22px;border-radius:12px;background:#05080d;margin:4px auto 10px}
+.phone .ph-top{display:flex;justify-content:space-between;font:500 10px/1 var(--f-mono);color:var(--mute);padding:0 10px 10px}
+.sms-from{text-align:center;font-size:11px;color:var(--mute);margin-bottom:10px}
+.sms-from b{display:block;color:var(--fg);font-size:13px;font-weight:600}
+.bubble{background:#1e2733;border-radius:18px 18px 18px 6px;padding:11px 13px;font-size:13px;line-height:1.5;color:var(--fg);margin:0 4px}
+.reply{display:flex;gap:6px;margin:10px 4px 0;justify-content:flex-end}
+.reply span{background:#2a7bef;color:#fff;border-radius:16px;padding:6px 13px;font-size:12px;font-weight:550}
+.langs{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.reach{display:grid;gap:7px}
+.reach-row{display:grid;grid-template-columns:118px minmax(0,1fr) 38px;gap:10px;align-items:center;font-size:12px;color:var(--mute)}
+.reach-row .b{height:6px;border-radius:3px;background:rgba(255,255,255,.07);overflow:hidden}
+.reach-row .b i{display:block;height:100%;border-radius:3px;background:var(--water)}
+.reach-row .n{font-family:var(--f-mono);text-align:right;color:var(--fg)}
+
+/* ---------- rescue queue ---------- */
+.rk.you{border-color:rgba(82,182,255,.55);background:rgba(82,182,255,.09)}
+.youtag{font:600 9.5px/1 var(--f-mono);letter-spacing:.1em;background:var(--water);color:var(--ink);border-radius:4px;padding:3px 5px;margin-left:6px;vertical-align:1px}
+.st{font:500 11.5px/1.3 var(--f-mono);text-align:right;white-space:nowrap}
+.st.wait{color:#ff8a96}.st.go{color:#ffd38e}.st.ok{color:#8debc8}
+.knock{border-radius:16px;padding:14px;border:1px dashed rgba(255,178,62,.5);background:rgba(255,178,62,.05);font-size:13px;color:var(--mute)}
+.knock b{color:#ffd38e;font-weight:600}
+.empty{font-size:13px;color:var(--dim);padding:12px;border:1px dashed var(--line2);border-radius:14px}
+@media (max-width:560px){.places{order:2}.plc{padding:6px 9px}.checkin{grid-template-columns:1fr}}
+
 @media (max-width:1100px){.main{grid-template-columns:minmax(0,1fr) 360px}}
 @media (max-width:900px){
   body{overflow:auto}
@@ -271,9 +352,9 @@ table.infra th.num{text-align:right}
   <canvas id="introRain" aria-hidden="true"></canvas>
   <div class="flash" aria-hidden="true"></div>
   <div class="intro-inner">
-    <p class="i1">Thursday · 4:47 pm · Elwood, Melbourne</p>
-    <h1 class="i2">The forecast says heavy rain.</h1>
-    <h1 class="i3">It doesn't say your street goes under in <em id="introMin">42 minutes</em>.</h1>
+    <p class="i1" id="introWhen">Thursday · 4:47 pm · Elwood, Melbourne</p>
+    <h1 class="i2" id="introL2">The forecast says heavy rain.</h1>
+    <h1 class="i3" id="introL3">It doesn't say your street goes under in <em>42 minutes</em>.</h1>
     <div class="i4 brand-reveal">
       <svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="lg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fdcff"/><stop offset="1" stop-color="#2f86e8"/></linearGradient></defs><path d="M24 4 40 10v13c0 10-7 17.5-16 21C15 40.5 8 33 8 23V10z" fill="none" stroke="url(#lg1)" stroke-width="2.4"/><path d="M14 27c3.3-2.6 6.7-2.6 10 0s6.7 2.6 10 0" fill="none" stroke="#9fdcff" stroke-width="2.4" stroke-linecap="round"/><path d="M24 13v8" stroke="#eaf1f9" stroke-width="2.4" stroke-linecap="round"/></svg>
       <b>FlashGuard</b><span>Before the water.</span>
@@ -292,6 +373,10 @@ table.infra th.num{text-align:right}
       <svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="lg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fdcff"/><stop offset="1" stop-color="#2f86e8"/></linearGradient></defs><path d="M24 4 40 10v13c0 10-7 17.5-16 21C15 40.5 8 33 8 23V10z" fill="none" stroke="url(#lg2)" stroke-width="3"/><path d="M14 27c3.3-2.6 6.7-2.6 10 0s6.7 2.6 10 0" fill="none" stroke="#9fdcff" stroke-width="3" stroke-linecap="round"/><path d="M24 13v8" stroke="#eaf1f9" stroke-width="3" stroke-linecap="round"/></svg>
       FlashGuard <small>AI</small>
     </div>
+    <div class="places" role="group" aria-label="Place">
+      <button class="plc" data-place="melb" aria-pressed="true">Elwood VIC<small>Flash flood</small></button>
+      <button class="plc" data-place="lis" aria-pressed="false">Lismore NSW<small>River flood</small></button>
+    </div>
     <nav class="tabs" role="tablist" aria-label="Views" id="tabs">
       <span class="tab-ind" id="tabInd"></span>
       <button class="tab" role="tab" data-mode="resident" aria-selected="true">Resident</button>
@@ -300,8 +385,7 @@ table.infra th.num{text-align:right}
       <button class="tab fut" role="tab" data-mode="futures" aria-selected="false">Two Futures</button>
     </nav>
     <div class="meta">
-      <span class="live"><i></i>Forecast run 4:47 pm</span>
-      <span class="where">· Elwood VIC</span>
+      <span class="live"><i></i><span id="liveRun">Forecast run 4:47 pm</span></span>
       <button class="linkbtn" id="replay">Replay intro</button>
     </div>
   </header>
@@ -311,7 +395,8 @@ table.infra th.num{text-align:right}
       <div class="stage" id="stage">
         <canvas id="map" aria-label="Flood map of Elwood showing predicted water depth by street"></canvas>
         <div class="hud hud-time"><div class="big" id="hudTime">4:47 pm</div><div class="sub" id="hudSub">Now</div></div>
-        <div class="hud hud-tag">Simulated scenario · Elster Creek catchment</div>
+        <div class="hud hud-tag" id="hudTag">Simulated scenario · Elster Creek catchment</div>
+        <div class="hud place-card" id="placeCard" hidden></div>
         <div class="hud legend" id="legend"><div>Predicted water depth</div><div class="bar"></div><div class="lbl"><span>5 cm</span><span>50 cm</span><span>1 m</span></div></div>
         <div class="hud split-lbl a" id="lblA" hidden>Without FlashGuard</div>
         <div class="hud split-lbl b" id="lblB" hidden>With FlashGuard</div>
@@ -331,13 +416,12 @@ table.infra th.num{text-align:right}
   </main>
 </div>
 <script>
-/* ===== FlashGuard impact model (simulated, illustrative) ===== */
-const FG = (() => {
-  const W = 96, H = 60, T = 150, NOW = 47, ACT = 52;
-  const ER = 2, EW = W * ER, EH = H * ER;
+/* ===== FlashGuard impact engine (simulated, illustrative) ===== */
+const FGE = (() => {
+  const W = 96, H = 60, T = 150, ER = 2, EW = W * ER, EH = H * ER;
 
   function hash(x, y) {
-    let h = (x | 0) * 374761393 + (y | 0) * 668265263;
+    let h = Math.round(x * 1000) * 374761393 + Math.round(y * 1000) * 668265263;
     h = Math.imul(h ^ (h >>> 13), 1274126177); h ^= h >>> 16;
     return (h >>> 0) / 4294967296;
   }
@@ -349,8 +433,6 @@ const FG = (() => {
     return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
   }
   const fbm = (x, y) => vnoise(x, y) * .5 + vnoise(x * 2.1, y * 2.1) * .25 + vnoise(x * 4.3, y * 4.3) * .125;
-  const coastX = y => 9 + 2.6 * Math.sin(y * 0.11 + 1) + 1.4 * Math.sin(y * 0.31);
-
   function segDist(px, py, ax, ay, bx, by) {
     const dx = bx - ax, dy = by - ay, l = dx * dx + dy * dy;
     let t = l ? ((px - ax) * dx + (py - ay) * dy) / l : 0; t = Math.max(0, Math.min(1, t));
@@ -361,248 +443,483 @@ const FG = (() => {
     for (let i = 0; i < pts.length - 1; i++) b = Math.min(b, segDist(px, py, pts[i][0], pts[i][1], pts[i + 1][0], pts[i + 1][1]));
     return b;
   }
+  const g = (t, m, s) => Math.exp(-(((t - m) / s) ** 2) / 2);
 
-  const creek = [[97, 13], [80, 17], [64, 24], [50, 28], [40, 32], [28, 38], [16, 42], [5, 43]];
+  function build(C) {
+    const coast = C.coastX || (() => -1e9);
+    const elevAt = (x, y) => C.terrain(x, y, { fbm, polyDist, coast });
+    const elev = new Float32Array(EW * EH), bay = new Uint8Array(EW * EH), shimmer = new Float32Array(EW * EH);
+    for (let j = 0; j < EH; j++) for (let i = 0; i < EW; i++) {
+      const x = (i + .5) / ER, y = (j + .5) / ER, k = j * EW + i;
+      elev[k] = elevAt(x, y); bay[k] = x < coast(y) ? 1 : 0; shimmer[k] = fbm(x * .35, y * .35);
+    }
+    const elevG = (x, y) => {
+      const i = Math.max(0, Math.min(EW - 1, Math.floor(x * ER))), j = Math.max(0, Math.min(EH - 1, Math.floor(y * ER)));
+      return elev[j * EW + i];
+    };
+    const rain = new Float32Array(T + 1);
+    for (let t = 0; t <= T; t++) rain[t] = C.rainBase + C.rainBursts.reduce((s, b) => s + b[0] * g(t, b[1], b[2]), 0);
+    function waterLevel(kBoost, boostFrom) {
+      const wl = new Float32Array(T + 1); let S = C.S0;
+      for (let t = 0; t <= T; t++) {
+        const k = t >= boostFrom ? C.k * kBoost : C.k;
+        S += rain[t] / 60 + (C.inflow ? C.inflow(t) : 0) - k * S; S = Math.max(0, S);
+        wl[t] = C.wlBase + S * C.wlScale;
+      }
+      return wl;
+    }
+    const WL = { A: waterLevel(1, 999), B: waterLevel(C.kBoost, C.ACT + 8) };
+    const peakT = Array.from(WL.A).indexOf(Math.max(...WL.A));
+    const depthAt = (f, x, y, t) => Math.max(0, WL[f][Math.max(0, Math.min(T, Math.round(t)))] - elevG(x, y));
+    const firstT = (f, level) => { for (let t = 0; t <= T; t++) if (WL[f][t] > level) return t; return null; };
 
-  function elevAt(x, y) {
-    const c = coastX(y);
-    if (x < c) return -1 - (c - x) * 0.1;
-    let e = 0.25 + (x - c) * 0.052 + (fbm(x * 0.07 + 3, y * 0.07 + 7) - 0.44) * 1.5;
-    const dc = polyDist(x, y, creek); e -= 1.25 * Math.exp(-dc * dc / 12);
-    e -= 0.95 * Math.exp(-((x - 33) ** 2 + (y - 29) ** 2) / 45);
-    e -= 0.65 * Math.exp(-((x - 53) ** 2 + (y - 41) ** 2) / 34);
-    e -= 0.45 * Math.exp(-((x - 20) ** 2 + (y - 18) ** 2) / 30);
-    return Math.max(0.04, e);
+    const streets = C.streets.map(s => ({ name: s.name, pts: s.pts }));
+    streets.forEach(s => {
+      const smp = [];
+      for (let i = 0; i < s.pts.length - 1; i++) {
+        const [ax, ay] = s.pts[i], [bx, by] = s.pts[i + 1], L = Math.hypot(bx - ax, by - ay), n = Math.ceil(L / .5);
+        for (let k = 0; k < n; k++) smp.push([ax + (bx - ax) * k / n, ay + (by - ay) * k / n]);
+      }
+      smp.push(s.pts[s.pts.length - 1]); s.smp = smp; s.smpE = smp.map(p => elevG(p[0], p[1]));
+      s.bridge = smp.map(p => C.rivers.some(r => polyDist(p[0], p[1], r.pts) < r.clear * .8));
+      s.minElev = Math.min(...s.smpE.filter((e, i) => !s.bridge[i]));
+      s.peak = Math.max(0, WL.A[peakT] - s.minElev);
+      s.peakB = Math.max(0, WL.B[peakT] - s.minElev);
+      s.floodT = firstT('A', s.minElev + .15);
+    });
+    const onStreet = (x, y, r = .9) => streets.some(s => polyDist(x, y, s.pts) < r);
+    const nearestStreet = (x, y) => streets.reduce((b, s) => { const d = polyDist(x, y, s.pts); return d < b.d ? { d, s } : b; }, { d: 1e9 }).s;
+
+    /* homes */
+    const homes = [];
+    const sp = C.homeSpacing;
+    for (let y = 1; y < H - 1; y += sp) for (let x = 1; x < W - 1; x += sp) {
+      const jx = x + (hash(x * 13, y * 7) - .5) * sp * .7, jy = y + (hash(x * 3, y * 17) - .5) * sp * .7;
+      if (jx < coast(jy) + 2.6) continue;
+      if (onStreet(jx, jy, 1.1)) continue;
+      if (C.rivers.some(r => polyDist(jx, jy, r.pts) < r.clear)) continue;
+      if (hash(jx * 31, jy * 29) < C.homeSkip) continue;
+      const e = elevG(jx, jy), floor = e + 0.22 + hash(jx * 7, jy * 5) * .12;
+      homes.push({ x: jx, y: jy, floor });
+    }
+    homes.forEach((h, i) => {
+      h.i = i;
+      h.tA = firstT('A', h.floor);
+      h.sandbag = !C.river && h.tA !== null && h.tA - C.ACT > 15 && hash(i, 77) < .6;
+      h.evac = !!C.river && h.tA !== null && h.tA - C.ACT > 15 && hash(i, 78) < .84;
+      h.tB = firstT('B', h.floor + (h.sandbag ? .25 : 0));
+      h.street = nearestStreet(h.x, h.y).name;
+      h.no = 1 + Math.floor(hash(i, 5) * 48);
+      h.people = 1 + Math.floor(hash(i, 9) * C.peoplePerHome * 1.6);
+      const needs = [];
+      if (hash(i, 11) < .22) needs.push('Elderly');
+      if (hash(i, 12) < .3) needs.push('Children');
+      if (hash(i, 13) < .09) needs.push('Medical');
+      if (hash(i, 14) < .07) needs.push('Disability');
+      h.needs = needs;
+    });
+
+    /* vehicles */
+    const cars = [];
+    streets.forEach((s, si) => s.smp.forEach((p, k) => {
+      if (k % 3 || hash(si * 91, k * 13) < .45) return;
+      const e = elevG(p[0], p[1]), tA = firstT('A', e + .3);
+      const moved = tA !== null && tA - C.ACT > 12 && hash(si * 3, k * 41) < .86;
+      cars.push({ x: p[0] + .45, y: p[1] + .2, tA, moved, k: hash(si, k) });
+    }));
+
+    const sites = C.sites.map(s => ({ ...s }));
+    sites.forEach(s => { s.elev = elevG(s.x, s.y); s.peak = Math.max(0, WL.A[peakT] - s.elev); s.tA = firstT('A', s.elev + .1); });
+
+    const me = { ...C.me }; me.elev = elevG(me.x, me.y); me.floodT = firstT('A', me.elev + .15); me.peak = Math.max(0, WL.A[peakT] - me.elev);
+    const safe = { ...C.safe }; safe.elev = elevG(safe.x, safe.y);
+
+    /* safe route */
+    function route() {
+      const N = W * H, dist = new Float32Array(N).fill(1e9), prev = new Int32Array(N).fill(-1), done = new Uint8Array(N), cost = new Float32Array(N);
+      for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+        const px = x + .5, py = y + .5, d = depthAt('A', px, py, peakT - 8);
+        let c = onStreet(px, py, .8) ? 1 : 7;
+        if (px < coast(py) + .5) c = 1e6;
+        if (C.rivers.some(r => polyDist(px, py, r.pts) < .9) && !onStreet(px, py, .8)) c = 1e6;
+        if (d > .12 && Math.hypot(px - me.x, py - me.y) > 3.5) c = 1e6;
+        cost[y * W + x] = c;
+      }
+      const s = Math.floor(me.y) * W + Math.floor(me.x), goal = Math.floor(safe.y) * W + Math.floor(safe.x);
+      dist[s] = 0; const open = [s];
+      while (open.length) {
+        let bi = 0; for (let i = 1; i < open.length; i++) if (dist[open[i]] < dist[open[bi]]) bi = i;
+        const u = open.splice(bi, 1)[0]; if (done[u]) continue; done[u] = 1; if (u === goal) break;
+        const ux = u % W, uy = (u / W) | 0;
+        for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]]) {
+          const vx = ux + dx, vy = uy + dy; if (vx < 0 || vy < 0 || vx >= W || vy >= H) continue;
+          const v = vy * W + vx, nd = dist[u] + cost[v] * (dx && dy ? 1.414 : 1);
+          if (nd < dist[v]) { dist[v] = nd; prev[v] = u; open.push(v); }
+        }
+      }
+      const path = []; let c = goal; while (c !== -1) { path.push([c % W + .5, ((c / W) | 0) + .5]); c = prev[c]; }
+      path.reverse(); path[0] = [me.x, me.y]; path.push([safe.x, safe.y]);
+      const sm = path.map((p, i) => { if (i === 0 || i === path.length - 1) return p; const a = path[i - 1], b = path[i + 1]; return [(a[0] + p[0] * 2 + b[0]) / 4, (a[1] + p[1] * 2 + b[1]) / 4]; });
+      let len = 0; for (let i = 1; i < sm.length; i++) len += Math.hypot(sm[i][0] - sm[i - 1][0], sm[i][1] - sm[i - 1][1]);
+      return { pts: sm, metres: Math.round(len * C.metresPerCell / 10) * 10 };
+    }
+    const safeRoute = route();
+
+    /* outcomes */
+    function outcomes(f) {
+      const hf = homes.filter(h => (f === 'A' ? h.tA : h.tB) !== null);
+      const cf = cars.filter(c => c.tA !== null && !(f === 'B' && c.moved)).length;
+      const sitesHit = sites.filter(s => s.tA !== null).length;
+      const inside = f === 'B' ? hf.filter(h => !h.evac) : hf;
+      const people = inside.reduce((s, h) => s + h.people, 0);
+      return { homes: hf.length, cars: cf, callouts: Math.round(inside.length * .55 + cf * .3 + (f === 'A' ? sitesHit * 6 : sitesHit)), people, damage: Math.round(hf.length * C.damageHome * (f === 'B' && C.river ? .85 : 1) + cf * C.damageCar) };
+    }
+    const OUT = { A: outcomes('A'), B: outcomes('B') };
+    function calloutCurve(f) {
+      const bins = new Array(15).fill(0);
+      homes.forEach(h => { const t = f === 'A' ? h.tA : h.tB; if (t !== null && !(f === 'B' && h.evac)) bins[Math.min(14, Math.floor(t / 10))] += .55; });
+      cars.forEach(c => { if (c.tA !== null && !(f === 'B' && c.moved)) bins[Math.min(14, Math.floor(c.tA / 10))] += .3; });
+      return bins.map(Math.round);
+    }
+    const CURVE = { A: calloutCurve('A'), B: calloutCurve('B') };
+
+    /* rescue requests and triage */
+    function requests(f) {
+      const out = [];
+      homes.forEach(h => {
+        const tf = f === 'A' ? h.tA : h.tB; if (tf === null) return;
+        if (f === 'B' && h.evac) return;
+        const pk = Math.max(0, WL[f][peakT] - h.floor);
+        const pHelp = C.helpRate * (f === 'A' ? 1.25 : 1) * (pk > .6 ? 1.6 : 1) * (h.needs.length ? 1.5 : 1);
+        if (hash(h.i, f === 'A' ? 21 : 22) > pHelp) return;
+        const t = Math.min(T, tf + Math.round(hash(h.i, 23) * (f === 'A' ? 14 : 8)));
+        const level = pk > .9 ? 'Chest' : pk > .45 ? 'Waist' : 'Knee';
+        out.push({ id: 'h' + h.i, x: h.x, y: h.y, t, people: h.people, needs: h.needs, level, peakDepth: pk, addr: `${h.no} ${h.street}`, home: h });
+      });
+      return out;
+    }
+    const prio = r => r.peakDepth * 60 + r.needs.length * 22 + r.people * 4 + (r.needs.includes('Medical') ? 15 : 0);
+    function schedule(reqs, mode) {
+      const base = C.staging.filter(s => s.crew);
+      const firstCall = Math.min(...reqs.map(r => r.t), T);
+      const crews = Array.from({ length: mode === 'triage' ? C.crews : (C.crewsA || C.crews) }, (_, i) => {
+        const b = base[i % base.length];
+        return mode === 'triage' ? { x: b.x, y: b.y, n: b.n, free: C.ACT + 12 } : { x: C.depot[0], y: C.depot[1], n: b.n, free: firstCall + C.mobilise };
+      });
+      reqs.forEach(r => { r.p = prio(r); r.assign = null; r.reach = null; r.done = null; r.crew = null; r.prioLabel = r.p > 80 ? 'P1' : r.p > 45 ? 'P2' : 'P3'; });
+      for (let t = 0; t <= T + 60; t++) {
+        for (const c of crews) {
+          if (c.free > t) continue;
+          const pend = reqs.filter(r => r.t <= t && r.assign === null);
+          if (!pend.length) break;
+          pend.sort((a, b) => mode === 'triage' ? (b.p + (t - b.t) * 1.2) - (a.p + (t - a.t) * 1.2) : a.t - b.t);
+          const r = pend[0], d = Math.hypot(r.x - c.x, r.y - c.y);
+          const travel = Math.round(3 + d * C.travelPerCell + (mode === 'fifo' ? C.locatePenalty : 0));
+          r.assign = t; r.reach = t + travel; r.done = r.reach + 7; r.crew = c.n; r.crewXY = [c.x, c.y];
+          c.free = r.done; c.x = r.x; c.y = r.y;
+        }
+      }
+      return reqs;
+    }
+    const REQ = { A: schedule(requests('A'), 'fifo'), B: schedule(requests('B'), 'triage') };
+    const waitStats = f => {
+      const all = REQ[f], end = T + 60, wait = r => (r.reach === null ? end : r.reach) - r.t;
+      const hi = all.filter(r => r.prioLabel === 'P1');
+      const avg = a => a.length ? Math.round(a.reduce((s, r) => s + wait(r), 0) / a.length) : 0;
+      return { p1: avg(hi), all: avg(all), n: all.length, late: all.filter(r => wait(r) > 45).length, unreached: all.filter(r => r.reach === null).length };
+    };
+    const WAIT = { A: waitStats('A'), B: waitStats('B') };
+
+    const clock = t => {
+      const m = C.startMin + Math.round(t); let h = Math.floor(m / 60) % 24; const mm = m % 60;
+      const ap = h >= 12 ? 'pm' : 'am'; h = h % 12 || 12; return `${h}:${String(mm).padStart(2, '0')} ${ap}`;
+    };
+
+    return { C, W, H, T, NOW: C.NOW, ACT: C.ACT, ER, EW, EH, elev, bay, shimmer, rain, WL, peakT, depthAt, elevG, coast, rivers: C.rivers, streets, homes, cars, sites, me, safe, safeRoute, OUT, CURVE, REQ, WAIT, schedule, prio, clock, hash, polyDist };
   }
 
-  /* elevation at render resolution */
-  const elev = new Float32Array(EW * EH);
-  const bay = new Uint8Array(EW * EH);
-  const shimmer = new Float32Array(EW * EH);
-  for (let j = 0; j < EH; j++) for (let i = 0; i < EW; i++) {
-    const x = (i + .5) / ER, y = (j + .5) / ER, k = j * EW + i;
-    elev[k] = elevAt(x, y); bay[k] = x < coastX(y) ? 1 : 0;
-    shimmer[k] = fbm(x * .35, y * .35);
-  }
-  const elevG = (x, y) => {
-    const i = Math.max(0, Math.min(EW - 1, Math.floor(x * ER))), j = Math.max(0, Math.min(EH - 1, Math.floor(y * ER)));
-    return elev[j * EW + i];
+  /* ---------------- places ---------------- */
+  const melbCoast = y => 9 + 2.6 * Math.sin(y * 0.11 + 1) + 1.4 * Math.sin(y * 0.31);
+  const elster = [[97, 13], [80, 17], [64, 24], [50, 28], [40, 32], [28, 38], [16, 42], [5, 43]];
+  const mcx = y => melbCoast(y) + 1.6;
+  const MELB = {
+    id: 'melb', startMin: 16 * 60, NOW: 47, ACT: 52,
+    coastX: melbCoast,
+    rivers: [{ name: 'Elster Creek', pts: elster, w: .32, clear: 1.6 }],
+    terrain(x, y, u) {
+      const c = u.coast(y);
+      if (x < c) return -1 - (c - x) * 0.1;
+      let e = 0.25 + (x - c) * 0.052 + (u.fbm(x * 0.07 + 3, y * 0.07 + 7) - 0.44) * 1.5;
+      const dc = u.polyDist(x, y, elster); e -= 1.25 * Math.exp(-dc * dc / 12);
+      e -= 0.95 * Math.exp(-((x - 33) ** 2 + (y - 29) ** 2) / 45);
+      e -= 0.65 * Math.exp(-((x - 53) ** 2 + (y - 41) ** 2) / 34);
+      e -= 0.45 * Math.exp(-((x - 20) ** 2 + (y - 18) ** 2) / 30);
+      return Math.max(0.04, e);
+    },
+    rainBase: 2.5, rainBursts: [[26, 64, 10], [88, 94, 13], [14, 122, 8]],
+    S0: 9, k: 0.02, kBoost: 1.75, wlBase: -0.5, wlScale: 0.042,
+    streets: [
+      { name: 'Ormond Esplanade', pts: [4, 12, 20, 28, 36, 44, 52, 58].map(y => [mcx(y), y]) },
+      { name: 'Glen Huntly Rd', pts: [[mcx(21), 21], [30, 22], [52, 23.5], [74, 24], [95, 25]] },
+      { name: 'Ormond Rd', pts: [[mcx(9), 9], [36, 11], [62, 12], [95, 9]] },
+      { name: 'Mitford St', pts: [[30, 3], [32, 16], [33.5, 30], [35, 44], [36, 58]] },
+      { name: 'Tennyson St', pts: [[45, 3], [46, 20], [47, 40], [48, 58]] },
+      { name: 'Docker St', pts: [[mcx(34), 34], [32, 34.5], [48, 35.5], [64, 36]] },
+      { name: 'Byron St', pts: [[24, 47], [40, 46.5], [56, 46], [72, 47]] },
+      { name: 'Marine Pde', pts: [[mcx(53), 53], [30, 53], [52, 54], [72, 55.5]] },
+      { name: 'Broadway', pts: [[60, 3], [61, 22], [62, 40], [63, 58]] },
+      { name: 'Brighton Rd', pts: [[80, 2], [81, 20], [82, 40], [83, 58]] },
+    ],
+    labelAt: { 'Ormond Esplanade': .62, 'Glen Huntly Rd': .62, 'Ormond Rd': .55, 'Mitford St': .12, 'Tennyson St': .08, 'Docker St': .55, 'Byron St': .7, 'Marine Pde': .7, 'Broadway': .12, 'Brighton Rd': .1 },
+    bigLabels: [{ text: 'PORT PHILLIP BAY', x: 4.2, y: 30, ang: -Math.PI / 2, color: 'rgba(120,170,220,.55)' }, { text: 'ELSTER CREEK', x: 70, y: 19.4, ang: -0.41, color: 'rgba(120,180,240,.7)' }],
+    sites: [
+      { name: 'Elster Lodge aged care', kind: 'Aged care', x: 37, y: 33, people: 64 },
+      { name: 'Elwood Primary School', kind: 'School', x: 43, y: 31.5, people: 410 },
+      { name: 'Marine Pde early learning', kind: 'Childcare', x: 53.5, y: 40.5, people: 58 },
+      { name: 'Docker St social housing', kind: 'Low mobility', x: 26, y: 36.5, people: 120 },
+    ],
+    me: { x: 33.9, y: 30.5, label: '14 Mitford St' },
+    safe: { x: 81.2, y: 29, label: 'Brighton Rd car park' },
+    staging: [{ x: 81.5, y: 23.5, n: 'Rescue crew 1', label: 'Rescue crews · staged', crew: true }, { x: 81.5, y: 40, n: 'Rescue crew 2', crew: true }, { x: 62, y: 15, n: 'Sandbag trailer', label: 'Sandbag trailer' }],
+    crews: 5, travelPerCell: .3, locatePenalty: 8, depot: [95, 2], mobilise: 15,
+    homeSpacing: 1.25, homeSkip: .35, peoplePerHome: 2.4, helpRate: .1,
+    metresPerCell: 22, damageHome: 78000, damageCar: 21000,
   };
 
-  /* rainfall hyetograph, mm/h, minute resolution. t=0 is 4:00 pm */
-  const g = (t, m, s) => Math.exp(-(((t - m) / s) ** 2) / 2);
-  const rain = new Float32Array(T + 1);
-  for (let t = 0; t <= T; t++) rain[t] = 2.5 + 26 * g(t, 64, 10) + 88 * g(t, 94, 13) + 14 * g(t, 122, 8);
+  /* Lismore: Wilsons River and Leycester Creek confluence */
+  const wilsons = [[92, -1], [76, 8], [62, 17], [50, 26], [45, 33], [41, 42], [38, 52], [36, 61]];
+  const leycester = [[-1, 13], [12, 17], [24, 21], [36, 25], [47, 29.5]];
+  const LIS = {
+    id: 'lis', startMin: 60, NOW: 47, ACT: 52,
+    coastX: null,
+    rivers: [
+      { name: 'Wilsons River', pts: wilsons, w: .6, clear: 1.9 },
+      { name: 'Leycester Creek', pts: leycester, w: .42, clear: 1.6 },
+    ],
+    terrain(x, y, u) {
+      const dw = u.polyDist(x, y, wilsons), dl = u.polyDist(x, y, leycester);
+      const d = Math.min(dw, dl * 1.1);
+      let e = 0.35 + Math.min(d, 26) * 0.065 + (u.fbm(x * 0.08 + 5, y * 0.08 + 9) - 0.45) * 1.1;
+      e += Math.max(0, x - 66) * 0.11;
+      e -= 1.6 * Math.exp(-dw * dw / 7) + 1.2 * Math.exp(-dl * dl / 5);
+      e -= 0.75 * Math.exp(-((x - 40) ** 2 + (y - 13) ** 2) / 70);
+      e -= 0.95 * Math.exp(-((x - 21) ** 2 + (y - 42) ** 2) / 95);
+      e -= 0.3 * Math.exp(-((x - 57) ** 2 + (y - 33) ** 2) / 30);
+      return Math.max(0.04, e);
+    },
+    rainBase: 6, rainBursts: [[30, 40, 14], [64, 82, 16], [26, 118, 12]],
+    inflow: t => 0.34 * Math.exp(-(((t - 98) / 26) ** 2) / 2),
+    river: true, S0: 14, k: 0.016, kBoost: 1, wlBase: -0.8, wlScale: 0.046,
+    streets: [
+      { name: 'Terania St', pts: [[38, 1], [40, 9], [42, 17], [45, 23]] },
+      { name: 'Bridge St', pts: [[22, 5], [30, 10], [38, 16], [46, 21]] },
+      { name: 'Molesworth St', pts: [[56, 16], [55, 26], [52, 36], [50, 46]] },
+      { name: 'Keen St', pts: [[62, 20], [61, 30], [59, 40], [58, 50]] },
+      { name: 'Woodlark St', pts: [[28, 30], [40, 31], [54, 31], [72, 32]] },
+      { name: 'Ballina St', pts: [[54, 38], [68, 39], [82, 40], [95, 41]] },
+      { name: 'Union St', pts: [[6, 48], [18, 44], [30, 39], [42, 36]] },
+      { name: 'Casino St', pts: [[4, 30], [16, 33], [26, 37], [32, 46], [34, 58]] },
+      { name: 'Uralba St', pts: [[64, 50], [78, 52], [94, 54]] },
+      { name: 'Bruxner Hwy', pts: [[72, 2], [80, 14], [88, 26], [95, 32]] },
+    ],
+    labelAt: { 'Terania St': .15, 'Bridge St': .25, 'Molesworth St': .5, 'Keen St': .55, 'Woodlark St': .82, 'Ballina St': .75, 'Union St': .25, 'Casino St': .2, 'Uralba St': .6, 'Bruxner Hwy': .55 },
+    bigLabels: [
+      { text: 'WILSONS RIVER', x: 69, y: 11.4, ang: -0.56, color: 'rgba(120,180,240,.8)' },
+      { text: 'LEYCESTER CREEK', x: 15, y: 16.6, ang: 0.32, color: 'rgba(120,180,240,.7)' },
+      { text: 'NORTH LISMORE', x: 30, y: 4, ang: 0, color: 'rgba(200,214,232,.32)', size: 12 },
+      { text: 'SOUTH LISMORE', x: 14, y: 55, ang: 0, color: 'rgba(200,214,232,.32)', size: 12 },
+      { text: 'CBD', x: 66, y: 26, ang: 0, color: 'rgba(200,214,232,.32)', size: 12 },
+      { text: 'GIRARDS HILL', x: 82, y: 47, ang: 0, color: 'rgba(200,214,232,.32)', size: 12 },
+    ],
+    sites: [
+      { name: 'Caravan park, North Lismore', kind: 'Caravan park', x: 34, y: 12, people: 85 },
+      { name: 'Aged care home, South Lismore', kind: 'Aged care', x: 24, y: 40.5, people: 72 },
+      { name: 'Social housing, South Lismore', kind: 'Low mobility', x: 17, y: 45, people: 140 },
+      { name: 'Primary school, North Lismore', kind: 'School', x: 47, y: 15, people: 260 },
+    ],
+    me: { x: 40.6, y: 8.6, label: '22 Terania St' },
+    safe: { x: 90, y: 24, label: 'Southern Cross University evacuation centre' },
+    staging: [
+      { x: 78, y: 36.5, n: 'SES flood rescue 1', label: 'SES flood rescue · Ballina St', crew: true },
+      { x: 66, y: 20, n: 'Community boat (verified)', label: 'Community boats · verified', crew: true },
+      { x: 78, y: 20, n: 'SES flood rescue 2', crew: true },
+    ],
+    crews: 11, crewsA: 6, travelPerCell: .4, locatePenalty: 14, depot: [95, 58], mobilise: 22,
+    homeSpacing: 1.15, homeSkip: .3, peoplePerHome: 2.5, helpRate: .14,
+    metresPerCell: 26, damageHome: 125000, damageCar: 21000,
+  };
 
-  /* catchment storage -> water level (m AHD) */
-  function waterLevel(kBase, kBoost, boostFrom) {
-    const wl = new Float32Array(T + 1); let S = 9;
-    for (let t = 0; t <= T; t++) {
-      const k = t >= boostFrom ? kBase * kBoost : kBase;
-      S += rain[t] / 60 - k * S; S = Math.max(0, S);
-      wl[t] = -0.5 + S * 0.042;
-    }
-    return wl;
-  }
-  const WL = { A: waterLevel(0.02, 1, 999), B: waterLevel(0.02, 1.75, ACT + 8) };
-  const peakT = Array.from(WL.A).indexOf(Math.max(...WL.A));
-  const depthAt = (f, x, y, t) => Math.max(0, WL[f][Math.max(0, Math.min(T, Math.round(t)))] - elevG(x, y));
-
-  /* streets */
-  const cx = y => coastX(y) + 1.6;
-  const streets = [
-    { name: 'Ormond Esplanade', pts: [4, 12, 20, 28, 36, 44, 52, 58].map(y => [cx(y), y]) },
-    { name: 'Glen Huntly Rd', pts: [[cx(21), 21], [30, 22], [52, 23.5], [74, 24], [95, 25]] },
-    { name: 'Ormond Rd', pts: [[cx(9), 9], [36, 11], [62, 12], [95, 9]] },
-    { name: 'Mitford St', pts: [[30, 3], [32, 16], [33.5, 30], [35, 44], [36, 58]] },
-    { name: 'Tennyson St', pts: [[45, 3], [46, 20], [47, 40], [48, 58]] },
-    { name: 'Docker St', pts: [[cx(34), 34], [32, 34.5], [48, 35.5], [64, 36]] },
-    { name: 'Byron St', pts: [[24, 47], [40, 46.5], [56, 46], [72, 47]] },
-    { name: 'Marine Pde', pts: [[cx(53), 53], [30, 53], [52, 54], [72, 55.5]] },
-    { name: 'Broadway', pts: [[60, 3], [61, 22], [62, 40], [63, 58]] },
-    { name: 'Brighton Rd', pts: [[80, 2], [81, 20], [82, 40], [83, 58]] },
-  ];
-  streets.forEach(s => {
-    const smp = [];
-    for (let i = 0; i < s.pts.length - 1; i++) {
-      const [ax, ay] = s.pts[i], [bx, by] = s.pts[i + 1], L = Math.hypot(bx - ax, by - ay), n = Math.ceil(L / .5);
-      for (let k = 0; k < n; k++) smp.push([ax + (bx - ax) * k / n, ay + (by - ay) * k / n]);
-    }
-    smp.push(s.pts[s.pts.length - 1]); s.smp = smp;
-    s.minElev = Math.min(...smp.map(p => elevG(p[0], p[1])));
-    s.peak = Math.max(...smp.map(p => depthAt('A', p[0], p[1], peakT)));
-    s.peakB = Math.max(...smp.map(p => depthAt('B', p[0], p[1], peakT)));
-    s.floodT = null;
-    for (let t = 0; t <= T; t++) if (WL.A[t] - s.minElev > 0.15) { s.floodT = t; break; }
-    s.wetLen = smp.filter(p => depthAt('A', p[0], p[1], peakT) > .15).length * .5;
-  });
-  const onStreet = (x, y, r = .9) => streets.some(s => polyDist(x, y, s.pts) < r);
-
-  /* homes */
-  const homes = [];
-  for (let y = 1; y < H - 1; y += 1.25) for (let x = 1; x < W - 1; x += 1.25) {
-    const jx = x + (hash(x * 13, y * 7) - .5) * .9, jy = y + (hash(x * 3, y * 17) - .5) * .9;
-    if (jx < coastX(jy) + 2.6) continue;
-    if (onStreet(jx, jy, 1.1)) continue;
-    if (polyDist(jx, jy, creek) < 1.6) continue;
-    if (hash(jx * 31, jy * 29) < .35) continue;
-    const e = elevG(jx, jy), floor = e + 0.22 + hash(jx * 7, jy * 5) * .12;
-    homes.push({ x: jx, y: jy, floor });
-  }
-  const homeFloodT = (h, f) => { for (let t = 0; t <= T; t++) if (WL[f][t] > h.floor) return t; return null; };
-  homes.forEach((h, i) => {
-    h.tA = homeFloodT(h, 'A');
-    h.tB0 = homeFloodT(h, 'B');
-    h.sandbag = h.tA !== null && h.tA - ACT > 15 && hash(i, 77) < .6;
-    h.tB = h.sandbag ? (() => { for (let t = 0; t <= T; t++) if (WL.B[t] > h.floor + .25) return t; return null; })() : h.tB0;
-  });
-
-  /* parked cars */
-  const cars = [];
-  streets.forEach((s, si) => s.smp.forEach((p, k) => {
-    if (k % 3 || hash(si * 91, k * 13) < .45) return;
-    const e = elevG(p[0], p[1]); let tA = null;
-    for (let t = 0; t <= T; t++) if (WL.A[t] - e > .3) { tA = t; break; }
-    const moved = tA !== null && tA - ACT > 12 && hash(si * 3, k * 41) < .86;
-    cars.push({ x: p[0] + .45, y: p[1] + .2, tA, moved });
-  }));
-
-  /* vulnerable sites */
-  const sites = [
-    { name: 'Elster Lodge aged care', kind: 'Aged care', x: 37, y: 33, people: 64 },
-    { name: 'Elwood Primary School', kind: 'School', x: 43, y: 31.5, people: 410 },
-    { name: 'Marine Pde early learning', kind: 'Childcare', x: 53.5, y: 40.5, people: 58 },
-    { name: 'Docker St social housing', kind: 'Low mobility', x: 26, y: 36.5, people: 120 },
-  ];
-  sites.forEach(s => { s.elev = elevG(s.x, s.y); s.peak = depthAt('A', s.x, s.y, peakT); s.tA = null; for (let t = 0; t <= T; t++) if (WL.A[t] - s.elev > .1) { s.tA = t; break; } });
-
-  /* resident */
-  const me = { x: 33.9, y: 30.5, label: '14 Mitford St' };
-  me.elev = elevG(me.x, me.y);
-  me.floodT = null; for (let t = 0; t <= T; t++) if (WL.A[t] - me.elev > .15) { me.floodT = t; break; }
-  me.peak = depthAt('A', me.x, me.y, peakT);
-  const safe = { x: 81.2, y: 29, label: 'Brighton Rd car park' };
-  safe.elev = elevG(safe.x, safe.y);
-
-  /* safe route: Dijkstra on the cell grid, streets cheap, deep water impassable */
-  function route() {
-    const N = W * H, dist = new Float32Array(N).fill(1e9), prev = new Int32Array(N).fill(-1), done = new Uint8Array(N);
-    const cost = new Float32Array(N);
-    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
-      const px = x + .5, py = y + .5, d = depthAt('A', px, py, peakT - 8);
-      let c = onStreet(px, py, .8) ? 1 : 7;
-      if (px < coastX(py) + .5) c = 1e6;
-      if (d > .12 && Math.hypot(px - me.x, py - me.y) > 3.5) c = 1e6;
-      cost[y * W + x] = c;
-    }
-    const s = Math.floor(me.y) * W + Math.floor(me.x), goal = Math.floor(safe.y) * W + Math.floor(safe.x);
-    dist[s] = 0; const open = [s];
-    while (open.length) {
-      let bi = 0; for (let i = 1; i < open.length; i++) if (dist[open[i]] < dist[open[bi]]) bi = i;
-      const u = open.splice(bi, 1)[0]; if (done[u]) continue; done[u] = 1; if (u === goal) break;
-      const ux = u % W, uy = (u / W) | 0;
-      for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]]) {
-        const vx = ux + dx, vy = uy + dy; if (vx < 0 || vy < 0 || vx >= W || vy >= H) continue;
-        const v = vy * W + vx, nd = dist[u] + cost[v] * (dx && dy ? 1.414 : 1);
-        if (nd < dist[v]) { dist[v] = nd; prev[v] = u; open.push(v); }
-      }
-    }
-    const path = []; let c = goal; while (c !== -1) { path.push([c % W + .5, ((c / W) | 0) + .5]); c = prev[c]; }
-    path.reverse(); path[0] = [me.x, me.y]; path.push([safe.x, safe.y]);
-    // smooth
-    const sm = path.map((p, i) => { if (i === 0 || i === path.length - 1) return p; const a = path[i - 1], b = path[i + 1]; return [(a[0] + p[0] * 2 + b[0]) / 4, (a[1] + p[1] * 2 + b[1]) / 4]; });
-    let len = 0; for (let i = 1; i < sm.length; i++) len += Math.hypot(sm[i][0] - sm[i - 1][0], sm[i][1] - sm[i - 1][1]);
-    return { pts: sm, metres: Math.round(len * 22 / 10) * 10 };
-  }
-  const safeRoute = route();
-
-  /* outcomes */
-  function outcomes(f) {
-    const hf = homes.filter(h => (f === 'A' ? h.tA : h.tB) !== null).length;
-    const cf = cars.filter(c => c.tA !== null && !(f === 'B' && c.moved)).length;
-    const sitesHit = sites.filter(s => s.tA !== null).length;
-    const callouts = Math.round(hf * .55 + cf * .3 + (f === 'A' ? sitesHit * 6 : sitesHit * 1));
-    const people = Math.round(hf * 2.4);
-    const damage = hf * 78000 + cf * 21000;
-    return { homes: hf, cars: cf, callouts, people, damage };
-  }
-  const OUT = { A: outcomes('A'), B: outcomes('B') };
-
-  /* callouts by 10-minute bin */
-  function calloutCurve(f) {
-    const bins = new Array(15).fill(0);
-    homes.forEach(h => { const t = f === 'A' ? h.tA : h.tB; if (t !== null) bins[Math.min(14, Math.floor(t / 10))] += .55; });
-    cars.forEach(c => { if (c.tA !== null && !(f === 'B' && c.moved)) bins[Math.min(14, Math.floor(c.tA / 10))] += .3; });
-    return bins.map(Math.round);
-  }
-  const CURVE = { A: calloutCurve('A'), B: calloutCurve('B') };
-
-  const clock = t => { const m = 16 * 60 + Math.round(t); let h = Math.floor(m / 60) % 24, mm = m % 60; const ap = h >= 12 ? 'pm' : 'am'; h = h % 12 || 12; return `${h}:${String(mm).padStart(2, '0')} ${ap}`; };
-
-  return { W, H, T, NOW, ACT, ER, EW, EH, elev, bay, shimmer, rain, WL, peakT, depthAt, elevG, coastX, creek, streets, homes, cars, sites, me, safe, safeRoute, OUT, CURVE, clock, hash, polyDist };
+  return { build, places: { melb: MELB, lis: LIS } };
 })();
-
 </script>
 <script>
 /* ===== FlashGuard app ===== */
 (() => {
   const $ = s => document.querySelector(s);
-  const F = FG, clock = F.clock;
-  const S = { mode: 'resident', t: F.NOW, playing: false, split: .5, route: false, layers: { homes: true, vuln: true, heat: true }, hl: null, checks: new Set(), startReal: performance.now() };
-  const fmt = n => n.toLocaleString('en-AU');
+  const built = {};
+  let F, C, P, D; // engine output, config, place copy, derived numbers
+  const S = { place: 'melb', mode: 'resident', t: 47, playing: false, split: .5, route: false, layers: { homes: true, vuln: true, heat: true }, hl: null, checks: new Set(), startReal: performance.now(), checkin: null, form: null, myReq: null, lang: 'en' };
+  const fmt = n => Math.round(n).toLocaleString('en-AU');
   const money = n => '$' + (n / 1e6).toFixed(1) + 'M';
   const cm = d => Math.round(d * 100) + ' cm';
+  const km = m => (m / 1000).toFixed(1) + ' km';
   const lerpWL = (f, t) => { const a = Math.floor(t), b = Math.min(F.T, a + 1), u = t - a; return F.WL[f][a] * (1 - u) + F.WL[f][b] * u; };
+  const clock = t => F.clock(t);
+  const hm = t => { const m = C.startMin + Math.round(t); return [Math.floor(m / 60) % 24, m % 60]; };
+  const zhTime = t => { const [h, m] = hm(t), p = h < 6 ? '凌晨' : h < 12 ? '上午' : h < 18 ? '下午' : '晚上'; return `${p}${h % 12 || 12}:${String(m).padStart(2, '0')}`; };
+  const vnTime = t => { const [h, m] = hm(t), p = h < 12 ? 'sáng' : h < 18 ? 'chiều' : 'tối'; return `${h % 12 || 12}:${String(m).padStart(2, '0')} ${p}`; };
 
-  /* derived numbers */
-  const me = F.me, minsLeft = me.floodT - F.NOW;
-  $('#introMin').textContent = minsLeft + ' minutes';
-  F.streets.forEach(s => {
-    s.smpE = s.smp.map(p => F.elevG(p[0], p[1]));
-    s.homes = F.homes.filter(h => h.tA !== null && F.polyDist(h.x, h.y, s.pts) < 2.6).length;
-    s.vuln = F.sites.filter(v => v.tA !== null && F.polyDist(v.x, v.y, s.pts) < 3).length;
-    s.score = s.floodT === null ? 0 : s.peak * 40 + s.homes * .8 + s.vuln * 15 + (150 - s.floodT) * .1;
-  });
-  const hot = F.streets.filter(s => s.floodT !== null).sort((a, b) => b.score - a.score);
-  const firstStreet = F.streets.filter(s => s.floodT !== null).sort((a, b) => a.floodT - b.floodT)[0];
-  const atRiskHomes = F.homes.filter(h => h.tA !== null);
-  const carsMoved = F.cars.filter(c => c.moved).length;
-  const sandbagged = F.homes.filter(h => h.sandbag).length;
-  const peakRain = Math.max(...F.rain), peakRainT = Array.from(F.rain).indexOf(peakRain);
-  const pct = Math.round(100 * F.homes.filter(h => h.floor - .25 < me.elev).length / F.homes.length);
-  const lodge = F.sites[0];
+  /* ---------- place copy ---------- */
+  const UI = {
+    melb: {
+      slug: 'elwood', short: 'Elwood', when: 'Thursday · 4:47 pm · Elwood, Melbourne', kind: 'Flash flood',
+      intro2: 'The forecast says heavy rain.',
+      intro3: m => `It doesn't say your street goes under in <em>${m} minutes</em>.`,
+      card: ['Elwood, Melbourne', 'Flash flood. Water rises in minutes, not hours.'],
+      tag: 'Simulated scenario · Elster Creek catchment',
+      elevUnit: 'above sea level',
+      home: 'Your street · 14 Mitford St',
+      why: () => [
+        ['Rain', `<b>${Math.round(D.peakRain)} mm/h burst</b> forecast at ${clock(D.peakRainT)}. Drains here are sized for about 30 mm/h.`],
+        ['Ground', `Your door sits <b>${F.me.elev.toFixed(2)} m</b> above sea level, lower than ${D.lowerThan}% of homes in Elwood.`],
+        ['Tide', 'A <b>high tide</b> in the bay slows Elster Creek from draining until about 7:10 pm.'],
+        ['Soil', 'Two days of rain have <b>saturated the ground</b>, so most new rain runs straight off.'],
+      ],
+      alert: () => ({ title: 'Move your car in the next 25 minutes', text: `Parking on Mitford St is under <b>30 cm by ${clock(F.me.floodT + 4)}</b>, enough to write off most cars. Brighton Rd car park is <b>${km(F.safeRoute.metres)}</b> away and <b>${(F.safe.elev - F.me.elev).toFixed(1)} m higher</b>.` }),
+      checklist: () => [
+        ['car', 'Move your car to higher ground', `Brighton Rd car park, ${km(F.safeRoute.metres)} away`],
+        ['lift', 'Lift valuables and power boards above 1 m', `Water at your door may reach ${cm(F.me.peak)}`],
+        ['bag', 'Sandbag front and rear doors', 'Free sandbags at the Broadway trailer until 5:20 pm'],
+        ['nb', 'Check on your neighbour at no. 18', 'Registered as needing help to leave'],
+        ['kit', 'Pack medicines, documents and a charged phone', `Be ready to leave by ${clock(F.me.floodT - 15)}`],
+      ],
+      sms: {
+        en: m => `FlashGuard FLOOD ALERT: Water is expected at 14 Mitford St at ${clock(F.me.floodT)} (${m} min). Move your car to Brighton Rd car park now. Don't drive through water. Reply 1 if safe, 2 if you need help.`,
+        easy: () => `Flood warning. Water will come to your house soon. It will come at ${clock(F.me.floodT)}. Move your car to a high place now. Do not drive in water. Text 1 if you are safe. Text 2 if you need help.`,
+        zh: m => `FlashGuard 洪水警报：预计${zhTime(F.me.floodT)}洪水将到达 Mitford St 14号（还有${m}分钟）。请立即把车移到 Brighton Rd 停车场。切勿驾车涉水。安全请回复1，需要帮助请回复2。`,
+        vi: m => `Cảnh báo lũ FlashGuard: Nước dự kiến đến 14 Mitford St lúc ${vnTime(F.me.floodT)} (còn ${m} phút). Hãy di chuyển xe đến bãi đỗ xe Brighton Rd ngay. Không lái xe qua vùng nước ngập. Trả lời 1 nếu an toàn, 2 nếu cần giúp đỡ.`,
+      },
+      reach: [['App alert', 58], ['SMS', 27], ['Voice call', 9], ['Doorknock', 3]],
+      council: { eyebrow: 'Council operations · next 2 hours', recTitle: s => `Clear pits and grates on ${s.name}`, recText: s => `Leaf litter from Tuesday's wind is likely to block inlets. With network pits cleared and pumps pre-started, modelled peak here drops from ${cm(s.peak)} to ${cm(s.peakB)}.`, recHead: 'Drain inspections before the storm', recBy: s => s.floodT - 22 },
+      infra: [['Tidal pump station at the Elster Creek outfall', '$7.2M', '$2.9M', '4.1'], ['Underground storage under Mitford St reserve', '$4.6M', '$1.4M', '3.2'], ['Raingardens and permeable parking, Docker St', '$1.1M', '$0.3M', '2.6']],
+      ses: { eyebrow: 'VIC SES · Bayside unit' },
+      prepos: () => [
+        ['Flood rescue crews to Brighton Rd', 'by 5:10 pm', `Dry access from high ground into the Mitford St basin, where ${F.streets.find(s => s.name === 'Mitford St').homes} homes flood.`],
+        ['Sandbag trailer to Broadway', 'by 5:00 pm', 'Broadway stays dry all evening and is a 6 minute walk for most at-risk households.'],
+      ],
+      fut: { lede: () => `Drag the divider on the map. Left, everyone waits for the water. Right, FlashGuard's alerts go out at ${clock(F.ACT)} and people act on them.`, hero: 'damage', climate: "Short, intense bursts like this are becoming more frequent as the climate warms, and drains built for last century's rain can't keep up. Adaptation isn't only concrete. It's also what people do in the hour before." },
+      acts: () => [
+        [F.ACT, `<b>${fmt(F.OUT.A.people)} residents</b> in ${D.atRisk.length} at-risk homes get a street-level alert with a countdown, by app, SMS or voice call.`],
+        [F.ACT + 4, `<b>${D.carsMoved} of ${D.carsAtRisk} cars</b> in the flood path move to higher ground.`],
+        [F.ACT + 8, 'Council clears <b>blocked pits</b> on the top 3 hotspots and starts pumps early.'],
+        [F.ACT + 10, `<b>${D.sandbagged} households</b> sandbag doors from the Broadway trailer.`],
+        [F.ACT + 13, 'SES doorknocks <b>Elster Lodge</b>, stages crews on dry ground and triages every call for help.'],
+      ],
+    },
+    lis: {
+      slug: 'lismore', short: 'Lismore', when: 'Monday · 1:47 am · North Lismore, NSW', kind: 'River flood',
+      intro2: 'The river warning says major flooding.',
+      intro3: m => `It doesn't say the water reaches your bed in <em>${m} minutes</em>, while your street is asleep.`,
+      card: ['Lismore, NSW', 'River flood. Same engine, overnight, in the dark.'],
+      tag: 'Simulated scenario · Wilsons River and Leycester Creek',
+      elevUnit: 'above the normal river level',
+      home: 'Your home · 22 Terania St, North Lismore',
+      why: () => [
+        ['River', `Wilsons River is rising about <b>${D.riseRate} cm an hour</b> and is forecast to peak at ${clock(F.peakT)}.`],
+        ['Rain', `<b>${Math.round(D.peakRain)} mm/h bursts</b> over the catchment since midnight, on ground that's already soaked.`],
+        ['Ground', `Your floor sits <b>${F.me.elev.toFixed(1)} m</b> ${'above the normal river level'}, in the low part of North Lismore.`],
+        ['Night', `It's ${clock(F.NOW)}. Most of your street is asleep with phones on silent, so FlashGuard calls instead of just texting.`],
+      ],
+      alert: () => ({ title: 'Leave now, while the road out is still dry', text: `Bridge St goes under at <b>${clock(D.bridgeSt.floodT)}</b>, cutting the way out of North Lismore. Southern Cross University evacuation centre is <b>${km(F.safeRoute.metres)}</b> away and <b>${(F.safe.elev - F.me.elev).toFixed(1)} m higher</b>. Take your car with you.` }),
+      checklist: () => [
+        ['wake', 'Wake everyone and leave together', `Bridge St closes at ${clock(D.bridgeSt.floodT)}`],
+        ['car', 'Take your car to higher ground', 'It will be under water if it stays in the street'],
+        ['lift', 'Put papers, photos and valuables up high', `Water inside may reach ${cm(F.me.peak)}`],
+        ['nb', 'Check on your neighbour at no. 24', 'Lives alone, registered as needing help to leave'],
+        ['kit', 'Take medicines, chargers and pet supplies', 'The evacuation centre has beds and food'],
+      ],
+      sms: {
+        en: m => `FlashGuard FLOOD ALERT: The river will reach 22 Terania St at about ${clock(F.me.floodT)} (${m} min). Bridge St closes at ${clock(D.bridgeSt.floodT)}. Wake everyone and leave now for the SCU evacuation centre. Reply 1 if safe, 2 if you need help.`,
+        easy: () => 'Flood warning. The river will come into your house tonight. Wake up everyone. Leave your house now. Go to the evacuation centre at the university. Text 1 if you are safe. Text 2 if you need help.',
+        zh: m => `FlashGuard 洪水警报：河水预计${zhTime(F.me.floodT)}到达 Terania St 22号（还有${m}分钟）。Bridge St 将于${zhTime(D.bridgeSt.floodT)}封闭。请叫醒所有人，立即前往 SCU 疏散中心。安全请回复1，需要帮助请回复2。`,
+        vi: m => `Cảnh báo lũ FlashGuard: Nước sông dự kiến đến 22 Terania St khoảng ${vnTime(F.me.floodT)} (còn ${m} phút). Đường Bridge St sẽ bị ngập lúc ${vnTime(D.bridgeSt.floodT)}. Hãy đánh thức mọi người và rời đi ngay đến trung tâm sơ tán SCU. Trả lời 1 nếu an toàn, 2 nếu cần giúp đỡ.`,
+      },
+      reach: [['App alert', 41], ['SMS', 28], ['Voice call', 18], ['Doorknock and siren', 9]],
+      council: { eyebrow: 'Council operations · overnight', recTitle: s => `Close floodgates and stormwater outlets near ${s.name}`, recText: s => `Stops the river backing up through drains before it overtops. Water reaches ${s.name} at ${clock(s.floodT)}, peaking at ${cm(s.peak)}.`, recHead: 'Close before the river arrives', recBy: s => s.floodT - 20 },
+      infra: [['Voluntary buyback and house raising, North Lismore', '$38M', '$9.6M', '3.4'], ['More river gauges and street sirens upstream', '$2.4M', '$0.7M', '3.1'], ['Raise the Bruxner Hwy evacuation route', '$21M', '$4.1M', '2.2']],
+      ses: { eyebrow: 'NSW SES · Northern Rivers' },
+      prepos: () => [
+        ['Flood rescue boats to Ballina St', 'by 2:05 am', 'Ballina St stays dry and reaches North and South Lismore by water once the roads close.'],
+        ['Activate verified community boats', 'by 2:00 am', 'Local boat owners, registered and checked in advance. FlashGuard gives them P2 and P3 jobs so SES crews take the hardest rescues.'],
+        ['Open the Southern Cross University evacuation centre', 'by 1:55 am', 'On high ground, stays dry, and on the safe route from North Lismore.'],
+      ],
+      fut: { lede: () => `Drag the divider on the map. Left, people wait for the water and then call for help. Right, FlashGuard's alerts go out at ${clock(F.ACT)} and people leave in time.`, hero: 'people', climate: 'Northern Rivers floods are getting bigger as the climate warms. In 2022, rescue services were overwhelmed and many people were saved by neighbours in their own boats. The homes will still flood. FlashGuard makes sure people aren\'t inside them, and that help goes to whoever needs it most.' },
+      acts: () => [
+        [F.ACT, `<b>${fmt(F.OUT.A.people)} people</b> in ${D.atRisk.length} homes in the flood path get an alert, and a voice call if they don't open it.`],
+        [F.ACT + 3, 'Southern Cross University evacuation centre opens, and the safe route goes out with every alert.'],
+        [F.ACT + 6, `<b>${D.evacuated} households</b> leave before the water, taking ${D.carsMoved} cars to higher ground.`],
+        [F.ACT + 9, 'SES boats are staged on Ballina St, and <b>verified community boats</b> are activated through the app.'],
+        [F.ACT + 12, 'Every call for help is triaged by water depth, people and needs, so the most urgent are reached first.'],
+      ],
+    },
+  };
+  const LANGS = [['en', 'English', 'en-AU'], ['easy', 'Easy English', 'en-AU'], ['zh', '中文', 'zh-CN'], ['vi', 'Tiếng Việt', 'vi-VN']];
 
-  /* ---------- canvas setup ---------- */
+  /* ---------- derived ---------- */
+  function derive() {
+    D = {};
+    D.minsLeft = F.me.floodT - F.NOW;
+    F.streets.forEach(s => {
+      s.homes = F.homes.filter(h => h.tA !== null && F.polyDist(h.x, h.y, s.pts) < 2.6).length;
+      s.vuln = F.sites.filter(v => v.tA !== null && F.polyDist(v.x, v.y, s.pts) < 3).length;
+      s.score = s.floodT === null ? 0 : s.peak * 40 + s.homes * .8 + s.vuln * 15 + (150 - s.floodT) * .1;
+    });
+    D.hot = F.streets.filter(s => s.floodT !== null).sort((a, b) => b.score - a.score);
+    D.first = F.streets.filter(s => s.floodT !== null).sort((a, b) => a.floodT - b.floodT)[0];
+    D.bridgeSt = F.streets.find(s => s.name === 'Bridge St');
+    D.atRisk = F.homes.filter(h => h.tA !== null);
+    D.carsMoved = F.cars.filter(c => c.moved).length;
+    D.carsAtRisk = F.cars.filter(c => c.tA !== null).length;
+    D.sandbagged = F.homes.filter(h => h.sandbag).length;
+    D.evacuated = F.homes.filter(h => h.evac).length;
+    D.peakRain = Math.max(...F.rain); D.peakRainT = Array.from(F.rain).indexOf(D.peakRain);
+    D.lowerThan = 100 - Math.round(100 * F.homes.filter(h => h.floor - .25 < F.me.elev).length / F.homes.length);
+    D.riseRate = Math.round((F.WL.A[F.NOW + 10] - F.WL.A[F.NOW]) * 600);
+    // check-ins (FlashGuard world)
+    const reqByHome = {}; F.REQ.B.forEach(r => { if (r.home) reqByHome[r.home.i] = r; });
+    D.atRisk.forEach(h => {
+      h.req = reqByHome[h.i] || null;
+      const replies = F.hash(h.i, 32) < (C.river ? .86 : .8);
+      h.safeT = h.req ? null : replies ? F.ACT + 3 + Math.round(F.hash(h.i, 31) * 45) : null;
+      h.deep = F.WL.A[F.peakT] - h.floor > .3;
+    });
+  }
+
+  /* ---------- canvas ---------- */
   const stage = $('#stage'), cv = $('#map'), ctx = cv.getContext('2d');
   let dpr = 1, cw = 0, ch = 0, sc = 1, ox = 0, oy = 0;
   const X = x => ox + x * sc, Y = y => oy + y * sc;
+  const terr = document.createElement('canvas'), base = document.createElement('canvas');
+  const wcv = { A: document.createElement('canvas'), B: document.createElement('canvas') }, wimg = {};
 
-  const terr = document.createElement('canvas'); terr.width = F.EW; terr.height = F.EH;
-  (() => {
-    const c = terr.getContext('2d'), im = c.createImageData(F.EW, F.EH), d = im.data;
+  function buildTerrain() {
+    terr.width = F.EW; terr.height = F.EH;
+    const c = terr.getContext('2d'), im = c.createImageData(F.EW, F.EH), d = im.data, N = F.EW * F.EH;
     for (let j = 0; j < F.EH; j++) for (let i = 0; i < F.EW; i++) {
       const k = j * F.EW + i, p = k * 4;
-      if (F.bay[k]) {
-        const v = i / F.EW;
-        d[p] = 6; d[p + 1] = 18 + v * 30; d[p + 2] = 34 + v * 50; d[p + 3] = 255; continue;
-      }
+      if (F.bay[k]) { const v = i / F.EW; d[p] = 6; d[p + 1] = 18 + v * 30; d[p + 2] = 34 + v * 50; d[p + 3] = 255; continue; }
       const e = F.elev[k];
-      const ex = F.elev[Math.min(k + 1, F.EW * F.EH - 1)] - F.elev[Math.max(k - 1, 0)];
-      const ey = F.elev[Math.min(k + F.EW, F.EW * F.EH - 1)] - F.elev[Math.max(k - F.EW, 0)];
+      const ex = F.elev[Math.min(k + 1, N - 1)] - F.elev[Math.max(k - 1, 0)];
+      const ey = F.elev[Math.min(k + F.EW, N - 1)] - F.elev[Math.max(k - F.EW, 0)];
       const shade = Math.max(-1, Math.min(1, (-ex - ey) * 6));
       let l = 15 + Math.min(e, 4) * 4.2 + shade * 6;
-      const band = Math.floor(e / .5);
-      const kr = i < F.EW - 1 ? k + 1 : k, kd = j < F.EH - 1 ? k + F.EW : k;
-      const contour = (!F.bay[kr] && Math.floor(F.elev[kr] / .5) !== band) || (!F.bay[kd] && Math.floor(F.elev[kd] / .5) !== band);
-      if (contour) l += 9;
+      const band = Math.floor(e / .5), kr = i < F.EW - 1 ? k + 1 : k, kd = j < F.EH - 1 ? k + F.EW : k;
+      if ((!F.bay[kr] && Math.floor(F.elev[kr] / .5) !== band) || (!F.bay[kd] && Math.floor(F.elev[kd] / .5) !== band)) l += 9;
       d[p] = l * .86; d[p + 1] = l * .98; d[p + 2] = l * 1.22; d[p + 3] = 255;
     }
     c.putImageData(im, 0, 0);
-  })();
-  const base = document.createElement('canvas');
-  const wcv = { A: document.createElement('canvas'), B: document.createElement('canvas') };
-  Object.values(wcv).forEach(c => { c.width = F.EW; c.height = F.EH; });
-  const wimg = { A: wcv.A.getContext('2d').createImageData(F.EW, F.EH), B: wcv.B.getContext('2d').createImageData(F.EW, F.EH) };
+    ['A', 'B'].forEach(f => { wcv[f].width = F.EW; wcv[f].height = F.EH; wimg[f] = wcv[f].getContext('2d').createImageData(F.EW, F.EH); });
+  }
 
   function resize() {
     const r = stage.getBoundingClientRect();
@@ -610,15 +927,16 @@ const FG = (() => {
     cv.width = Math.round(cw * dpr); cv.height = Math.round(ch * dpr);
     sc = Math.max(cw / F.W, ch / F.H);
     ox = (cw - F.W * sc) / 2; oy = (ch - F.H * sc) / 2;
-    if (cw < 520) ox = Math.min(0, Math.max(cw - F.W * sc, cw / 2 - 46 * sc));
+    if (cw < 520) ox = Math.min(0, Math.max(cw - F.W * sc, cw / 2 - (F.me.x + 8) * sc));
     base.width = cv.width; base.height = cv.height;
     const b = base.getContext('2d'); b.setTransform(dpr, 0, 0, dpr, 0, 0);
     b.imageSmoothingEnabled = true; b.imageSmoothingQuality = 'high';
     b.drawImage(terr, X(0), Y(0), F.W * sc, F.H * sc);
-    // creek
-    b.beginPath(); F.creek.forEach((p, i) => i ? b.lineTo(X(p[0]), Y(p[1])) : b.moveTo(X(p[0]), Y(p[1])));
-    b.strokeStyle = 'rgba(82,160,235,.55)'; b.lineWidth = Math.max(1.5, sc * .32); b.lineJoin = b.lineCap = 'round'; b.stroke();
-    // vignette
+    b.lineJoin = b.lineCap = 'round';
+    for (const rv of F.rivers) {
+      b.beginPath(); rv.pts.forEach((p, i) => i ? b.lineTo(X(p[0]), Y(p[1])) : b.moveTo(X(p[0]), Y(p[1])));
+      b.strokeStyle = 'rgba(60,140,225,.6)'; b.lineWidth = Math.max(1.5, sc * rv.w); b.stroke();
+    }
     const g = b.createRadialGradient(cw / 2, ch / 2, Math.min(cw, ch) * .35, cw / 2, ch / 2, Math.max(cw, ch) * .75);
     g.addColorStop(0, 'rgba(5,8,13,0)'); g.addColorStop(1, 'rgba(5,8,13,.55)');
     b.fillStyle = g; b.fillRect(0, 0, cw, ch);
@@ -640,43 +958,36 @@ const FG = (() => {
     wcv[f].getContext('2d').putImageData(im, 0, 0);
     return wcv[f];
   }
-
   const depthCol = (dep, a = 1) => dep > .3 ? `rgba(255,79,97,${a})` : dep > .12 ? `rgba(255,140,70,${a})` : dep > .03 ? `rgba(255,178,62,${a})` : `rgba(190,206,228,${a * .26})`;
 
   function drawWorld(f, t, time) {
     ctx.drawImage(waterLayer(f, t, time), X(0), Y(0), F.W * sc, F.H * sc);
     const wl = lerpWL(f, t);
-    // homes
     if (S.layers.homes) {
       const hs = Math.max(1.6, sc * .44);
       for (const h of F.homes) {
         const tf = f === 'A' ? h.tA : h.tB, wet = tf !== null && tf <= t;
+        if (wet && f === 'B' && h.evac) { ctx.strokeStyle = 'rgba(255,79,97,.9)'; ctx.lineWidth = 1; ctx.strokeRect(X(h.x) - hs / 2 + .5, Y(h.y) - hs / 2 + .5, hs - 1, hs - 1); continue; }
         ctx.fillStyle = wet ? 'rgba(255,79,97,.95)' : (f === 'B' && h.sandbag && t >= F.ACT + 6 ? 'rgba(60,216,162,.75)' : 'rgba(160,180,206,.26)');
         ctx.fillRect(X(h.x) - hs / 2, Y(h.y) - hs / 2, hs, hs);
       }
     }
-    // streets
     ctx.lineCap = 'round'; ctx.lineWidth = Math.max(1.8, sc * .34);
     for (const s of F.streets) {
       for (let i = 0; i < s.smp.length - 1; i++) {
         const dep = wl - s.smpE[i];
-        ctx.strokeStyle = depthCol(dep, dep > .03 ? .95 : 1);
+        ctx.strokeStyle = s.bridge[i] ? 'rgba(220,230,244,.55)' : depthCol(dep, dep > .03 ? .95 : 1);
         ctx.beginPath(); ctx.moveTo(X(s.smp[i][0]), Y(s.smp[i][1])); ctx.lineTo(X(s.smp[i + 1][0]), Y(s.smp[i + 1][1])); ctx.stroke();
       }
     }
-    // cars
     const cs = Math.max(2, sc * .4);
     for (const c of F.cars) {
-      const gone = f === 'B' && c.moved && t >= F.ACT + 4 + F.hash(c.x * 9, c.y * 9) * 20;
-      if (gone) continue;
-      const wet = c.tA !== null && c.tA <= t;
-      ctx.fillStyle = wet ? '#ff4f61' : 'rgba(234,241,249,.75)';
+      if (f === 'B' && c.moved && t >= F.ACT + 4 + c.k * 20) continue;
+      ctx.fillStyle = c.tA !== null && c.tA <= t ? '#ff4f61' : 'rgba(234,241,249,.75)';
       ctx.fillRect(X(c.x) - cs * .7, Y(c.y) - cs * .4, cs * 1.4, cs * .8);
     }
   }
-
   function strokePath(pts) { ctx.beginPath(); pts.forEach((p, i) => i ? ctx.lineTo(X(p[0]), Y(p[1])) : ctx.moveTo(X(p[0]), Y(p[1]))); }
-
   function label(text, x, y, ang = 0, color = 'rgba(200,214,232,.8)', size = 9.5) {
     ctx.save(); ctx.translate(x, y); if (ang > Math.PI / 2 || ang < -Math.PI / 2) ang += Math.PI; ctx.rotate(ang);
     ctx.font = `600 ${size}px Geist, system-ui, sans-serif`; try { ctx.letterSpacing = '1.2px'; } catch (e) { }
@@ -687,39 +998,30 @@ const FG = (() => {
   function pill(text, x, y, bg, fg) {
     ctx.font = '600 11px Geist, system-ui, sans-serif'; try { ctx.letterSpacing = '0px'; } catch (e) { }
     const w = ctx.measureText(text).width + 16, h = 22;
-    ctx.fillStyle = bg; ctx.beginPath(); ctx.roundRect(x - w / 2, y - h - 12, w, h, 11); ctx.fill();
-    ctx.fillStyle = fg; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(text, x, y - h / 2 - 12);
+    let px = Math.max(8 + w / 2, Math.min(cw - 8 - w / 2, x));
+    ctx.fillStyle = bg; ctx.beginPath(); ctx.roundRect(px - w / 2, y - h - 12, w, h, 11); ctx.fill();
+    ctx.fillStyle = fg; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(text, px, y - h / 2 - 12);
   }
-
-  const labelAt = { 'Ormond Esplanade': .62, 'Glen Huntly Rd': .62, 'Ormond Rd': .55, 'Mitford St': .12, 'Tennyson St': .08, 'Docker St': .55, 'Byron St': .7, 'Marine Pde': .7, 'Broadway': .12, 'Brighton Rd': .1 };
 
   /* rain */
   const drops = Array.from({ length: 420 }, () => ({ x: Math.random(), y: Math.random(), l: .6 + Math.random() * .8, v: .7 + Math.random() * .6 }));
-  function rainAt(t) { const a = Math.floor(t); return F.rain[Math.min(F.T, a)]; }
-  function drawRain(c, w, h, intensity, dt) {
-    const n = Math.round(30 + intensity / peakRain * (drops.length - 30));
+  function drawRain(c, w, h, intensity, peak, dt) {
+    const n = Math.round(30 + intensity / peak * (drops.length - 30));
     c.strokeStyle = 'rgba(190,222,255,.22)'; c.lineWidth = 1; c.beginPath();
     for (let i = 0; i < n; i++) {
       const d = drops[i]; d.y += d.v * dt * 1.4; d.x += d.v * dt * .18; if (d.y > 1.05) { d.y = -.05; d.x = Math.random(); } if (d.x > 1) d.x -= 1;
-      const L = 10 + d.l * 14 * (.5 + intensity / peakRain);
+      const L = 10 + d.l * 14 * (.5 + intensity / peak);
       c.moveTo(d.x * w, d.y * h); c.lineTo(d.x * w + L * .13, d.y * h + L);
     }
     c.stroke();
   }
 
-  /* ---------- main draw ---------- */
-  let last = performance.now();
-  function frame(now) {
-    const dt = Math.min(.05, (now - last) / 1000); last = now; const time = now / 1000;
-    if (S.playing) {
-      S.t = Math.min(F.T, S.t + dt * 11);
-      if (S.t >= S.stopAt) { S.t = S.stopAt; setPlaying(false); }
-      syncT(false);
-    }
-    if (!introOpen) render(time, dt);
-    tickCountdown();
-    if (introOpen) introRainFrame(dt);
-    requestAnimationFrame(frame);
+  /* request status at time t */
+  function reqState(r, t) {
+    if (r.t > t) return 'future';
+    if (r.reach !== null && r.reach <= t) return 'reached';
+    if (r.assign !== null && r.assign <= t) return 'enroute';
+    return 'waiting';
   }
 
   function render(time, dt) {
@@ -733,42 +1035,38 @@ const FG = (() => {
       ctx.save(); ctx.beginPath(); ctx.rect(sx, 0, cw - sx, ch); ctx.clip(); drawWorld('B', t, time); ctx.restore();
     } else drawWorld('A', t, time);
 
-    // highlight street
     if (S.hl) {
       ctx.save(); ctx.shadowColor = 'rgba(159,220,255,.9)'; ctx.shadowBlur = 14; ctx.strokeStyle = 'rgba(234,241,249,.95)';
       ctx.lineWidth = Math.max(3, sc * .6); strokePath(S.hl.pts); ctx.stroke(); ctx.restore();
     }
 
-    // SES heatmap: callouts expected in the next 30 minutes
-    if (S.mode === 'ses' && S.layers.heat) {
-      ctx.save(); ctx.globalCompositeOperation = 'lighter';
-      const r = sc * 3.4;
-      for (const h of atRiskHomes) {
-        if (h.tA > t + 30 || h.tA < t - 25) continue;
-        const g = ctx.createRadialGradient(X(h.x), Y(h.y), 0, X(h.x), Y(h.y), r);
-        g.addColorStop(0, 'rgba(255,120,60,.16)'); g.addColorStop(1, 'rgba(255,60,60,0)');
-        ctx.fillStyle = g; ctx.fillRect(X(h.x) - r, Y(h.y) - r, r * 2, r * 2);
+    if (S.mode === 'ses') {
+      if (S.layers.heat) {
+        ctx.save(); ctx.globalCompositeOperation = 'lighter';
+        const r = sc * 3.4;
+        for (const h of D.atRisk) {
+          if (h.tA > t + 30 || h.tA < t - 25) continue;
+          const g = ctx.createRadialGradient(X(h.x), Y(h.y), 0, X(h.x), Y(h.y), r);
+          g.addColorStop(0, 'rgba(255,120,60,.14)'); g.addColorStop(1, 'rgba(255,60,60,0)');
+          ctx.fillStyle = g; ctx.fillRect(X(h.x) - r, Y(h.y) - r, r * 2, r * 2);
+        }
+        ctx.restore();
       }
-      ctx.restore();
-      const stg = [{ x: 81.5, y: 23.5, n: 'Rescue crew · staged' }, { x: 62, y: 15, n: 'Sandbag trailer' }];
-      stg.forEach(p => {
+      C.staging.forEach(p => {
         const s = Math.max(8, sc * 1.1);
-        ctx.fillStyle = '#ffb23e'; ctx.fillRect(X(p.x) - s / 2, Y(p.y) - s / 2, s, s);
+        ctx.fillStyle = p.crew ? '#ffb23e' : '#9fdcff'; ctx.fillRect(X(p.x) - s / 2, Y(p.y) - s / 2, s, s);
         ctx.strokeStyle = 'rgba(5,8,13,.9)'; ctx.lineWidth = 2; ctx.strokeRect(X(p.x) - s / 2, Y(p.y) - s / 2, s, s);
-        label(p.n.toUpperCase(), X(p.x), Y(p.y) + s + 6, 0, '#ffd38e', 9);
+        if (p.label) label(p.label.toUpperCase(), X(p.x), Y(p.y) + s + 6, 0, '#ffd38e', 9);
       });
+      drawRequests(t, time, true);
     }
 
-    // street labels
     for (const s of F.streets) {
-      const u = labelAt[s.name] ?? .5, i = Math.floor(u * (s.smp.length - 2));
-      const a = s.smp[i], b = s.smp[i + 1];
+      const u = C.labelAt[s.name] ?? .5, i = Math.floor(u * (s.smp.length - 2)), a = s.smp[i], b = s.smp[i + 1];
       label(s.name.toUpperCase(), X(a[0]), Y(a[1]) + (Math.abs(b[1] - a[1]) > Math.abs(b[0] - a[0]) ? 0 : -sc * .9), Math.atan2(Y(b[1]) - Y(a[1]), X(b[0]) - X(a[0])));
     }
-    label('PORT PHILLIP BAY', X(4.2), Y(30), -Math.PI / 2, 'rgba(120,170,220,.55)', 10);
-    label('ELSTER CREEK', X(70), Y(19.4), Math.atan2(-7 * sc, 16 * sc), 'rgba(120,180,240,.7)', 9);
+    C.bigLabels.forEach(l => label(l.text, X(l.x), Y(l.y), l.ang, l.color, l.size || 10));
 
-    // vulnerable sites
     if ((S.mode === 'council' && S.layers.vuln) || S.mode === 'ses') {
       for (const v of F.sites) {
         const wet = v.tA !== null && v.tA <= t, s = Math.max(7, sc * .9);
@@ -780,7 +1078,6 @@ const FG = (() => {
       }
     }
 
-    // resident markers
     if (S.mode === 'resident') {
       if (S.route) {
         ctx.save(); ctx.setLineDash([sc * .7, sc * .55]); ctx.lineDashOffset = -time * 18;
@@ -788,62 +1085,74 @@ const FG = (() => {
         ctx.strokeStyle = '#3cd8a2'; ctx.lineWidth = Math.max(2.5, sc * .42); ctx.lineCap = 'round'; ctx.lineJoin = 'round';
         strokePath(F.safeRoute.pts); ctx.stroke(); ctx.restore();
         ctx.fillStyle = '#3cd8a2'; ctx.beginPath(); ctx.arc(X(F.safe.x), Y(F.safe.y), Math.max(5, sc * .6), 0, 7); ctx.fill();
-        pill('Higher ground · +' + (F.safe.elev - me.elev).toFixed(1) + ' m', X(F.safe.x), Y(F.safe.y), '#3cd8a2', '#04140e');
+        pill('Higher ground · +' + (F.safe.elev - F.me.elev).toFixed(1) + ' m', X(F.safe.x), Y(F.safe.y), '#3cd8a2', '#04140e');
       }
-      const r = Math.max(5, sc * .6), pulse = (time % 1.6) / 1.6;
+      if (S.myReq) drawRequests(t, time, false);
+      const me = F.me, r = Math.max(5, sc * .6), pulse = (time % 1.6) / 1.6;
       ctx.strokeStyle = `rgba(234,241,249,${1 - pulse})`; ctx.lineWidth = 2;
       ctx.beginPath(); ctx.arc(X(me.x), Y(me.y), r + pulse * r * 3.2, 0, 7); ctx.stroke();
       ctx.fillStyle = '#eaf1f9'; ctx.beginPath(); ctx.arc(X(me.x), Y(me.y), r, 0, 7); ctx.fill();
       ctx.fillStyle = '#05080d'; ctx.beginPath(); ctx.arc(X(me.x), Y(me.y), r * .45, 0, 7); ctx.fill();
       const dep = Math.max(0, lerpWL('A', t) - me.elev);
-      pill(dep > .02 ? `You · ${cm(dep)} at your door` : 'You · 14 Mitford St', X(me.x), Y(me.y), dep > .15 ? '#ff4f61' : '#eaf1f9', dep > .15 ? '#fff' : '#05080d');
+      pill(dep > .02 ? `You · ${cm(dep)} at your door` : `You · ${me.label}`, X(me.x), Y(me.y), dep > .15 ? '#ff4f61' : '#eaf1f9', dep > .15 ? '#fff' : '#05080d');
     }
+    drawRain(ctx, cw, ch, F.rain[Math.min(F.T, Math.floor(t))], D.peakRain, dt);
+  }
 
-    drawRain(ctx, cw, ch, rainAt(t), dt);
+  function drawRequests(t, time, all) {
+    const list = all ? F.REQ.B : [S.myReq];
+    for (const r of list) {
+      const st = reqState(r, t); if (st === 'future') continue;
+      const x = X(r.x), y = Y(r.y), s = Math.max(4, sc * .55);
+      if (st === 'enroute') {
+        const u = Math.min(1, (t - r.assign) / Math.max(1, r.reach - r.assign));
+        const cx = X(r.crewXY[0] + (r.x - r.crewXY[0]) * u), cy = Y(r.crewXY[1] + (r.y - r.crewXY[1]) * u);
+        ctx.save(); ctx.setLineDash([4, 4]); ctx.strokeStyle = 'rgba(255,178,62,.75)'; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(x, y); ctx.stroke(); ctx.restore();
+        ctx.fillStyle = '#ffb23e'; ctx.beginPath(); ctx.arc(cx, cy, s * .9, 0, 7); ctx.fill();
+        ctx.strokeStyle = '#05080d'; ctx.lineWidth = 1.5; ctx.stroke();
+      }
+      if (st === 'reached') { ctx.fillStyle = 'rgba(60,216,162,.9)'; ctx.beginPath(); ctx.arc(x, y, s * .7, 0, 7); ctx.fill(); continue; }
+      const pulse = ((time + (r.p % 1)) % 1.2) / 1.2;
+      ctx.strokeStyle = `rgba(255,79,97,${1 - pulse})`; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(x, y, s + pulse * s * 2.6, 0, 7); ctx.stroke();
+      ctx.fillStyle = st === 'enroute' ? '#ffb23e' : '#ff4f61'; ctx.beginPath(); ctx.arc(x, y, s, 0, 7); ctx.fill();
+      if (r.id === 'me' && all) pill('YOU', x, y, '#52b6ff', '#05080d');
+    }
   }
 
   /* ---------- timeline ---------- */
   const tl = $('#tl'), tctx = tl.getContext('2d'), scrub = $('#scrub');
   function drawTimeline() {
-    const r = tl.getBoundingClientRect(); if (!r.width) return;
+    const r = tl.getBoundingClientRect(); if (!r.width || !F) return;
     tl.width = r.width * dpr; tl.height = r.height * dpr; const c = tctx; c.setTransform(dpr, 0, 0, dpr, 0, 0);
     const w = r.width, h = r.height, top = 16, bot = h - 16, tx = t => t / F.T * w;
     c.clearRect(0, 0, w, h);
-    // past shading
     c.fillStyle = 'rgba(255,255,255,.025)'; c.fillRect(0, top, tx(F.NOW), bot - top);
-    // rain bars
     const bw = w / (F.T + 1);
     for (let t = 0; t <= F.T; t++) {
-      const v = F.rain[t] / peakRain, bh = v * (bot - top - 4);
-      const past = t <= S.t;
+      const v = F.rain[t] / D.peakRain, bh = v * (bot - top - 4), past = t <= S.t;
       c.fillStyle = v > .6 ? (past ? 'rgba(159,220,255,.95)' : 'rgba(159,220,255,.4)') : (past ? 'rgba(82,182,255,.8)' : 'rgba(82,182,255,.3)');
       c.fillRect(t * bw + .3, bot - bh, Math.max(1, bw - .6), bh);
     }
-    // water level at your door
-    c.beginPath();
-    for (let t = 0; t <= F.T; t++) { const d = Math.max(0, F.WL.A[t] - me.elev); const y = bot - Math.min(1, d / 1) * (bot - top - 4); t ? c.lineTo(tx(t), y) : c.moveTo(tx(t), y); }
-    c.strokeStyle = 'rgba(255,79,97,.85)'; c.lineWidth = 1.5; c.stroke();
-    if (S.mode === 'futures') {
+    const line = (f, col) => {
       c.beginPath();
-      for (let t = 0; t <= F.T; t++) { const d = Math.max(0, F.WL.B[t] - me.elev); const y = bot - Math.min(1, d / 1) * (bot - top - 4); t ? c.lineTo(tx(t), y) : c.moveTo(tx(t), y); }
-      c.strokeStyle = 'rgba(60,216,162,.9)'; c.stroke();
-    }
-    // hour ticks
+      for (let t = 0; t <= F.T; t++) { const d = Math.max(0, F.WL[f][t] - F.me.elev); const y = bot - Math.min(1, d) * (bot - top - 4); t ? c.lineTo(tx(t), y) : c.moveTo(tx(t), y); }
+      c.strokeStyle = col; c.lineWidth = 1.5; c.stroke();
+    };
+    line('A', 'rgba(255,79,97,.85)');
+    if (S.mode === 'futures' && !C.river) line('B', 'rgba(60,216,162,.9)');
     c.font = '500 10px "Geist Mono", ui-monospace, monospace'; c.fillStyle = '#5e6c82'; c.textBaseline = 'alphabetic';
-    [0, 30, 60, 90, 120, 150].forEach(t => { c.textAlign = t === 0 ? 'left' : t === 150 ? 'right' : 'center'; c.fillText(clock(t).replace(' pm', ''), tx(t), h - 2); });
-    // now marker
+    [0, 30, 60, 90, 120, 150].forEach(t => { c.textAlign = t === 0 ? 'left' : t === 150 ? 'right' : 'center'; c.fillText(clock(t).replace(/ (am|pm)/, ''), tx(t), h - 2); });
     c.strokeStyle = 'rgba(234,241,249,.5)'; c.setLineDash([2, 3]); c.beginPath(); c.moveTo(tx(F.NOW), top - 4); c.lineTo(tx(F.NOW), bot); c.stroke(); c.setLineDash([]);
     c.fillStyle = '#8d9cb2'; c.textAlign = 'center'; c.fillText('NOW', tx(F.NOW), 10);
-    // your door marker
-    c.fillStyle = '#ff4f61'; c.beginPath(); c.arc(tx(me.floodT), bot - .15 * (bot - top - 4), 3, 0, 7); c.fill();
-    c.fillText('YOUR DOOR', Math.min(w - 30, tx(me.floodT)), 10);
-    // playhead
+    c.fillStyle = '#ff4f61'; c.beginPath(); c.arc(tx(F.me.floodT), bot - .15 * (bot - top - 4), 3, 0, 7); c.fill();
+    c.fillText('YOUR DOOR', Math.min(w - 30, tx(F.me.floodT)), 10);
     const px = tx(S.t);
     c.fillStyle = '#eaf1f9'; c.fillRect(px - 1, top - 6, 2, bot - top + 6);
     c.beginPath(); c.arc(px, top - 6, 4.5, 0, 7); c.fill();
   }
 
-  /* ---------- time sync ---------- */
   function syncT(fromInput) {
     if (!fromInput) scrub.value = Math.round(S.t);
     const t = Math.round(S.t), d = t - F.NOW;
@@ -855,7 +1164,6 @@ const FG = (() => {
     drawTimeline(); updateDyn();
   }
   scrub.addEventListener('input', () => { setPlaying(false); S.t = +scrub.value; syncT(true); });
-
   const playBtn = $('#play'), playIco = $('#playIco');
   function setPlaying(on) {
     S.playing = on;
@@ -866,72 +1174,139 @@ const FG = (() => {
   playBtn.addEventListener('click', () => { if (S.playing) setPlaying(false); else play(S.t >= F.T - 1 ? F.NOW : S.t, F.T); });
   document.addEventListener('keydown', e => { if (e.code === 'Space' && !introOpen && e.target === document.body) { e.preventDefault(); playBtn.click(); } });
 
-  /* ---------- countdown ---------- */
   let cdEl = null;
   function tickCountdown() {
     if (!cdEl || !cdEl.isConnected) return;
-    const left = Math.max(0, minsLeft * 60 - (performance.now() - S.startReal) / 1000);
-    const m = Math.floor(left / 60), s = Math.floor(left % 60);
-    const txt = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    const left = Math.max(0, D.minsLeft * 60 - (performance.now() - S.startReal) / 1000);
+    const txt = `${String(Math.floor(left / 60)).padStart(2, '0')}:${String(Math.floor(left % 60)).padStart(2, '0')}`;
     if (cdEl.firstChild.nodeValue !== txt) cdEl.firstChild.nodeValue = txt;
   }
 
-  /* ---------- panels ---------- */
-  const panel = $('#panel');
+  /* ---------- panel pieces ---------- */
+  const foot = '<p class="foot">Simulated scenario for demonstration. Terrain, rainfall and impacts are modelled, not live data.</p>';
+
+  function checkinHTML() {
+    const t = Math.round(S.t), wet = t >= F.me.floodT;
+    if (S.checkin === 'safe') {
+      const n = D.atRisk.filter(h => h.safeT !== null && h.safeT <= Math.max(t, F.ACT + 20)).length;
+      return `<div class="status-card safe"><div class="hd"><b>You're marked safe</b><span class="pill dry">Shared</span></div>
+        <p>Your household, and the SES, can see you're OK, so no crew is sent to your door. ${fmt(n)} other households nearby have checked in safe.</p>
+        <div><button class="btn sm" data-ci="reset">Change my status</button></div></div>`;
+    }
+    if (S.checkin === 'form') {
+      const fm = S.form, needs = ['Elderly', 'Children', 'Medical', 'Disability', 'Pets'], levels = ['Ankle', 'Knee', 'Waist', 'Chest'];
+      return `<div class="form" role="group" aria-label="Request rescue">
+        <h4>Request rescue</h4>
+        <div class="field"><span class="lbl">People with you</span><div class="stepper"><button data-ci="minus" aria-label="Fewer people">−</button><output id="ppl">${fm.people}</output><button data-ci="plus" aria-label="More people">+</button></div></div>
+        <div class="field"><span class="lbl">Anyone who needs extra help</span><div class="chips">${needs.map(n => `<button class="chip" data-need="${n}" aria-pressed="${fm.needs.has(n)}">${n}</button>`).join('')}</div></div>
+        <div class="field"><span class="lbl">Water inside right now</span><div class="chips">${levels.map(n => `<button class="chip" data-level="${n}" aria-pressed="${fm.level === n}">${n}</button>`).join('')}</div></div>
+        <p class="note">Your location is sent automatically. If your battery is low, we'll keep your place in the queue.</p>
+        <div class="form-actions"><button class="btn danger" data-ci="send">Send rescue request</button><button class="btn sm" data-ci="reset">Cancel</button></div>
+      </div>`;
+    }
+    if (S.checkin === 'sent' && S.myReq) return `<div class="status-card" id="myStatus">${myStatusHTML()}</div>`;
+    return `<div class="sec">
+      <div class="sec-h"><h3>${wet ? "Water is at your door. Tell us you're OK" : 'When the water comes, check in'}</h3><span>1 tap</span></div>
+      <div class="checkin">
+        <button class="big-btn safe" data-ci="safe">I'm safe<small>No one needs to come</small></button>
+        <button class="big-btn help" data-ci="help">I need help<small>Goes straight to the rescue queue</small></button>
+      </div></div>`;
+  }
+
+  function queueRank(r, t) {
+    const live = F.REQ.B.filter(x => x.t <= t && (x.assign === null || x.assign > t));
+    const score = x => x.p + (t - x.t) * 1.2;
+    return 1 + live.filter(x => x !== r && score(x) > score(r)).length;
+  }
+  function myStatusHTML() {
+    const r = S.myReq, t = Math.round(S.t), st = reqState(r, t);
+    const steps = [
+      ['Request received', r.t, st !== 'future'],
+      [`Prioritised ${r.prioLabel}`, r.t, st !== 'future'],
+      [`${r.crew || 'Crew'} assigned`, r.assign, st === 'enroute' || st === 'reached'],
+      ['On the way', r.assign, st === 'enroute' || st === 'reached'],
+      ['Crew with you', r.reach, st === 'reached'],
+    ];
+    const nowIdx = steps.findIndex(s => !s[2]);
+    let big = '', line = '';
+    if (st === 'reached') { big = 'Help is here'; line = `${r.crew} reached you at ${clock(r.reach)}. Follow the crew's instructions.`; }
+    else if (st === 'enroute') { big = `${Math.max(1, r.reach - t)}<small>min away</small>`; line = `${r.crew} is on the way. Stay where you are, move to the highest point and keep a light on.`; }
+    else if (st === 'waiting') { big = `#${queueRank(r, t)}<small>in the queue</small>`; line = `Priority ${r.prioLabel}. You're ranked by water depth, people and needs, not by who called first. Stay on the highest floor.`; }
+    else { big = 'Sending'; line = `Request will send at ${clock(r.t)}.`; }
+    return `<div class="hd"><b>Rescue request · ${r.people} ${r.people === 1 ? 'person' : 'people'}${r.needs.length ? ' · ' + r.needs.join(', ') : ''}</b><span class="pill ${r.prioLabel === 'P1' ? 'p1' : r.prioLabel === 'P2' ? 'p2' : 'p3'}">${r.prioLabel}</span></div>
+      <div class="eta">${big}</div><p>${line}</p>
+      <div class="track">${steps.map((s, i) => `<div class="stp ${s[2] ? 'done' : i === nowIdx ? 'now' : ''}"><i></i><span>${s[0]}</span><time>${s[2] && s[1] !== null ? clock(s[1]) : ''}</time></div>`).join('')}</div>
+      <p class="note">Press play or drag the timeline to follow the rescue. <button class="linkbtn" data-ci="cancel">Cancel request</button></p>`;
+  }
+
+  function deliverHTML() {
+    const L = LANGS.find(l => l[0] === S.lang), body = P.sms[S.lang](D.minsLeft);
+    return `<div class="deliver">
+      <div class="sec-h"><h3>How this alert reaches everyone</h3><span>no app needed</span></div>
+      <div class="langs" role="group" aria-label="Alert language">${LANGS.map(l => `<button class="chip" data-lang="${l[0]}" aria-pressed="${l[0] === S.lang}">${l[1]}</button>`).join('')}</div>
+      <div class="phone"><div class="notch"></div><div class="ph-top"><span>${clock(F.ACT)}</span><span>SMS</span></div>
+        <div class="sms-from"><b>FlashGuard</b>Emergency alert</div>
+        <div class="bubble" lang="${L[2]}">${body}</div>
+        <div class="reply"><span>1</span><span>2</span></div>
+      </div>
+      <div style="display:flex;justify-content:center"><button class="btn sm water" id="voiceBtn"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6v4h3l4 3V3L6 6z" fill="currentColor"/><path d="M12 5.5a3.5 3.5 0 0 1 0 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Play the voice call</button></div>
+      <div class="reach">${P.reach.map(r => `<div class="reach-row"><span>${r[0]}</span><span class="b"><i style="width:${r[1]}%"></i></span><span class="n">${r[1]}%</span></div>`).join('')}
+        <p class="note">Share of at-risk homes reached by each channel. Anyone who doesn't reply goes on the SES doorknock list.</p></div>
+    </div>`;
+  }
+
+  function speak() {
+    try {
+      const synth = window.speechSynthesis; if (!synth) throw 0;
+      synth.cancel();
+      const L = LANGS.find(l => l[0] === S.lang);
+      const text = P.sms[S.lang](D.minsLeft).replace(/FlashGuard/g, 'Flash Guard');
+      const u = new SpeechSynthesisUtterance(text); u.lang = L[2]; u.rate = .95;
+      const v = synth.getVoices().find(v => v.lang && v.lang.toLowerCase().startsWith(L[2].slice(0, 2).toLowerCase()));
+      if (v) u.voice = v;
+      synth.speak(u);
+    } catch (e) { const b = $('#voiceBtn'); if (b) b.textContent = 'Voice isn\'t available in this browser'; }
+  }
+
+  /* ---------- views ---------- */
   const views = {
     resident() {
-      const items = [
-        ['car', 'Move your car to higher ground', 'Brighton Rd car park, ' + (F.safeRoute.metres / 1000).toFixed(1) + ' km away'],
-        ['lift', 'Lift valuables and power boards above 1 m', 'Water at your door may reach ' + cm(me.peak)],
-        ['bag', 'Sandbag front and rear doors', 'Free sandbags at the Broadway trailer until 5:20 pm'],
-        ['nb', 'Check on your neighbour at no. 18', 'Registered as needing help to leave'],
-        ['kit', 'Pack medicines, documents and a charged phone', 'Be ready to leave by ' + clock(me.floodT - 15)],
-      ];
-      const done = items.filter(i => S.checks.has(i[0])).length;
+      const items = P.checklist(), done = items.filter(i => S.checks.has(i[0])).length, al = P.alert();
       return `
-      <div class="sec">
-        <div class="eyebrow">Your street · 14 Mitford St</div>
-        <h2 class="h-display">Water reaches your door in</h2>
-      </div>
+      <div class="sec"><div class="eyebrow">${P.home}</div><h2 class="h-display">Water reaches your door in</h2></div>
       <div class="count-card">
-        <div class="k">Severe flash flood risk · confidence 87%</div>
+        <div class="k">Severe ${P.kind.toLowerCase()} risk · confidence 87%</div>
         <div class="count" id="cd">00:00<small>min</small></div>
-        <div class="s">Expected at <b>${clock(me.floodT)}</b>. Peaks at <b>${cm(me.peak)}</b> around <b>${clock(F.peakT)}</b>, clear by about 7:40 pm.</div>
+        <div class="s">Expected at <b>${clock(F.me.floodT)}</b>. Peaks at <b>${cm(F.me.peak)}</b> around <b>${clock(F.peakT)}</b>.</div>
         <div class="risk-steps"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
         <div class="risk-lbl"><span>Low</span><span>Moderate</span><span>High</span><b>Severe</b></div>
       </div>
+      <div id="checkin">${checkinHTML()}</div>
+      <div class="alert">
+        <div class="t"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2 1.5 17h17z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M10 8v4M10 14.5v.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>${al.title}</div>
+        <p>${al.text}</p>
+        <div><button class="btn sm water" id="routeBtn" aria-pressed="${S.route}">${S.route ? 'Hide safe route' : 'Show safe route'}</button></div>
+      </div>
       <div class="sec">
         <div class="sec-h"><h3>Why your risk is high</h3><span>4 signals</span></div>
-        <dl class="why">
-          <div><dt>Rain</dt><dd><b>${Math.round(peakRain)} mm/h burst</b> forecast at ${clock(peakRainT)}. Drains here are sized for about 30 mm/h.</dd></div>
-          <div><dt>Ground</dt><dd>Your door sits <b>${me.elev.toFixed(2)} m</b> above sea level, lower than ${100 - pct}% of homes in Elwood.</dd></div>
-          <div><dt>Tide</dt><dd>A <b>high tide</b> in the bay slows Elster Creek from draining until about 7:10 pm.</dd></div>
-          <div><dt>Soil</dt><dd>Two days of rain have <b>saturated the ground</b>, so most new rain runs straight off.</dd></div>
-        </dl>
-      </div>
-      <div class="alert">
-        <div class="t"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2 1.5 17h17z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M10 8v4M10 14.5v.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Move your car in the next 25 minutes</div>
-        <p>Parking on Mitford St is under <b>30 cm by ${clock(me.floodT + 4)}</b>, enough to write off most cars. Brighton Rd car park is <b>${(F.safeRoute.metres / 1000).toFixed(1)} km</b> away and <b>${(F.safe.elev - me.elev).toFixed(1)} m higher</b>.</p>
-        <div><button class="btn sm water" id="routeBtn" aria-pressed="${S.route}">${S.route ? 'Hide safe route' : 'Show safe route'}</button></div>
+        <dl class="why">${P.why().map(w => `<div><dt>${w[0]}</dt><dd>${w[1]}</dd></div>`).join('')}</dl>
       </div>
       <div class="sec">
         <div class="sec-h"><h3>Before the water</h3><span id="chkN">${done} of ${items.length} done</span></div>
         <div class="prog"><i id="chkBar" style="width:${done / items.length * 100}%"></i></div>
         <div class="checks">${items.map(i => `<label class="chk"><input type="checkbox" id="chk-${i[0]}" data-k="${i[0]}" ${S.checks.has(i[0]) ? 'checked' : ''}><span>${i[1]}<small>${i[2]}</small></span></label>`).join('')}</div>
       </div>
-      <p class="note">Never drive or walk through floodwater; 15 cm of moving water can float a small car. Life-threatening emergency: <b>000</b>. VIC SES flood and storm help: <b>132 500</b>.</p>
-      <p class="foot">Simulated scenario for demonstration. Terrain, rainfall and impacts are modelled, not live data.</p>`;
+      ${deliverHTML()}
+      <p class="note">Never drive or walk through floodwater; 15 cm of moving water can float a small car. Life-threatening emergency: <b>000</b>. SES flood and storm help: <b>132 500</b>.</p>
+      ${foot}`;
     },
     council() {
-      const maxPk = Math.max(...hot.map(s => s.peak));
+      const hot = D.hot, maxPk = Math.max(...hot.map(s => s.peak)), K = P.council;
       return `
-      <div class="sec">
-        <div class="eyebrow">Council operations · next 2 hours</div>
-        <h2 class="h-display">${hot.length} streets will flood tonight. Here's where to act first.</h2>
-      </div>
+      <div class="sec"><div class="eyebrow">${K.eyebrow}</div><h2 class="h-display">${hot.length} streets will flood. Here's where to act first.</h2></div>
       <div class="kpis">
-        <div class="kpi"><div class="v crit">${fmt(atRiskHomes.length)}</div><div class="l">Homes over floor level</div></div>
-        <div class="kpi"><div class="v">${clock(firstStreet.floodT)}</div><div class="l">First flooding · ${firstStreet.name}</div></div>
+        <div class="kpi"><div class="v crit">${fmt(D.atRisk.length)}</div><div class="l">Homes over floor level</div></div>
+        <div class="kpi"><div class="v">${clock(D.first.floodT)}</div><div class="l">First flooding · ${D.first.name}</div></div>
         <div class="kpi"><div class="v">${F.sites.filter(s => s.tA !== null).length} of ${F.sites.length}</div><div class="l">Vulnerable sites affected</div></div>
         <div class="kpi"><div class="v">${money(F.OUT.A.damage)}</div><div class="l">Damage if nobody acts</div></div>
       </div>
@@ -948,102 +1323,105 @@ const FG = (() => {
         <div class="rank">${F.sites.map(v => `<div class="rk" style="cursor:default"><span class="n">◆</span><span><span class="nm">${v.name}</span><br><span class="ds">${v.kind} · ${v.people} people</span></span><span>${v.tA === null ? '<span class="pill dry">Stays dry</span>' : `<span class="pill ${v.tA - F.NOW < 45 ? 'p1' : 'p2'}">${clock(v.tA)}</span>`}</span></div>`).join('')}</div>
       </div>
       <div class="sec">
-        <div class="sec-h"><h3>Drain inspections before the storm</h3><span>crews: 3</span></div>
-        ${hot.slice(0, 3).map(s => `<div class="rec"><div class="top2"><b>Clear pits and grates on ${s.name}</b><span class="when">by ${clock(s.floodT - 22)}</span></div><p>Leaf litter from Tuesday's wind is likely to block inlets. With network pits cleared and pumps pre-started, modelled peak here drops from ${cm(s.peak)} to ${cm(s.peakB)}.</p></div>`).join('')}
+        <div class="sec-h"><h3>${K.recHead}</h3><span>crews: 3</span></div>
+        ${hot.slice(0, 3).map(s => `<div class="rec"><div class="top2"><b>${K.recTitle(s)}</b><span class="when">by ${clock(Math.max(F.NOW + 5, K.recBy(s)))}</span></div><p>${K.recText(s)}</p></div>`).join('')}
       </div>
       <div class="sec">
         <div class="sec-h"><h3>Infrastructure priorities</h3><span>illustrative estimates</span></div>
-        <div class="tbl"><table class="infra">
-          <thead><tr><th>Project</th><th class="num">Cost</th><th class="num">Avoided / yr</th><th class="num">BCR</th></tr></thead>
-          <tbody>
-            <tr><td>Tidal pump station at the Elster Creek outfall</td><td class="num">$7.2M</td><td class="num">$2.9M</td><td class="num">4.1</td></tr>
-            <tr><td>Underground storage under Mitford St reserve</td><td class="num">$4.6M</td><td class="num">$1.4M</td><td class="num">3.2</td></tr>
-            <tr><td>Raingardens and permeable parking, Docker St</td><td class="num">$1.1M</td><td class="num">$0.3M</td><td class="num">2.6</td></tr>
-          </tbody></table></div>
-        <p class="note">Ranked by damage avoided over 30 years against the same storm, replayed under 2050 rainfall intensity.</p>
+        <div class="tbl"><table class="infra"><thead><tr><th>Project</th><th class="num">Cost</th><th class="num">Avoided / yr</th><th class="num">BCR</th></tr></thead>
+          <tbody>${P.infra.map(r => `<tr><td>${r[0]}</td><td class="num">${r[1]}</td><td class="num">${r[2]}</td><td class="num">${r[3]}</td></tr>`).join('')}</tbody></table></div>
+        <p class="note">Ranked by damage avoided over 30 years against this storm, replayed under 2050 rainfall intensity.</p>
       </div>
-      <p class="foot">Simulated scenario for demonstration. Terrain, rainfall and impacts are modelled, not live data.</p>`;
+      ${foot}`;
     },
     ses() {
-      const A = F.CURVE.A, B = F.CURVE.B, mx = Math.max(...A), peakBin = A.indexOf(mx);
-      const bins = A.map((v, i) => i).filter(i => i >= 6 && i <= 12);
+      const A = F.CURVE.A, B = F.CURVE.B, mx = Math.max(...A, 1), peakBin = A.indexOf(mx);
+      const bins = A.map((v, i) => i).filter(i => i >= 5 && i <= 13);
       const W = 340, Hh = 130, bw = W / bins.length;
       const svg = `<svg viewBox="0 0 ${W} ${Hh + 22}" role="img" aria-label="Predicted callouts per 10 minutes">
         ${[0, .5, 1].map(f => `<line x1="0" x2="${W}" y1="${Hh - f * (Hh - 10)}" y2="${Hh - f * (Hh - 10)}" stroke="rgba(150,182,224,.12)"/>`).join('')}
-        ${bins.map((i, k) => { const ha = A[i] / mx * (Hh - 10), hb = B[i] / mx * (Hh - 10); return `<rect x="${k * bw + 6}" y="${Hh - ha}" width="${bw / 2 - 6}" height="${ha}" rx="3" fill="#ff4f61"/><rect x="${k * bw + bw / 2 + 1}" y="${Hh - hb}" width="${bw / 2 - 6}" height="${hb}" rx="3" fill="#3cd8a2" opacity=".85"/>${A[i] ? `<text x="${k * bw + bw / 4 + 3}" y="${Hh - ha - 5}" fill="#eaf1f9" font-size="10" font-family="Geist Mono, monospace" text-anchor="middle">${A[i]}</text>` : ''}<text x="${k * bw + bw / 2}" y="${Hh + 16}" fill="#5e6c82" font-size="10" font-family="Geist Mono, monospace" text-anchor="middle">${clock(i * 10).replace(' pm', '')}</text>`; }).join('')}
+        ${bins.map((i, k) => { const ha = A[i] / mx * (Hh - 10), hb = B[i] / mx * (Hh - 10); return `<rect x="${k * bw + 5}" y="${Hh - ha}" width="${bw / 2 - 5}" height="${ha}" rx="3" fill="#ff4f61"/><rect x="${k * bw + bw / 2 + 1}" y="${Hh - hb}" width="${bw / 2 - 5}" height="${hb}" rx="3" fill="#3cd8a2" opacity=".85"/>${A[i] ? `<text x="${k * bw + bw / 4 + 2}" y="${Hh - ha - 5}" fill="#eaf1f9" font-size="10" font-family="Geist Mono, monospace" text-anchor="middle">${A[i]}</text>` : ''}<text x="${k * bw + bw / 2}" y="${Hh + 16}" fill="#5e6c82" font-size="10" font-family="Geist Mono, monospace" text-anchor="middle">${clock(i * 10).replace(/ (am|pm)/, '')}</text>`; }).join('')}
       </svg>`;
+      const sitesSorted = F.sites.filter(s => s.tA !== null).sort((a, b) => a.tA - b.tA);
+      const act = { 'Aged care': 'Doorknock and move residents to safety', 'Low mobility': 'Doorknock and help residents leave', 'Caravan park': 'Wake every van and move people out', 'School': 'Notify staff and close the grounds', 'Childcare': 'Notify staff before opening', };
       return `
-      <div class="sec">
-        <div class="eyebrow">VIC SES · Bayside unit</div>
-        <h2 class="h-display">${F.OUT.A.callouts} callouts are coming. The first wave lands at ${clock(peakBin * 10)}.</h2>
-      </div>
+      <div class="sec"><div class="eyebrow">${P.ses.eyebrow}</div><h2 class="h-display">${F.OUT.A.callouts} calls for help are coming. The first wave lands at ${clock(peakBin * 10)}.</h2></div>
       <div class="kpis">
-        <div class="kpi"><div class="v crit">${mx}</div><div class="l">Callouts in the peak 10 minutes</div></div>
-        <div class="kpi"><div class="v">${fmt(F.OUT.A.people)}</div><div class="l">People in homes taking water</div></div>
+        <div class="kpi"><div class="v crit" id="kNeed">0</div><div class="l">Need help right now</div></div>
+        <div class="kpi"><div class="v" id="kCrews">0</div><div class="l">Crews on a rescue</div></div>
+        <div class="kpi"><div class="v" id="kSafe">0</div><div class="l">Households checked in safe</div></div>
+        <div class="kpi"><div class="v" id="kSilent">0</div><div class="l">No reply, deep water coming</div></div>
       </div>
+      <div class="sec">
+        <div class="sec-h"><h3>Live rescue queue</h3><span id="qTime">ranked by risk, not call order</span></div>
+        <div class="rank" id="queue"></div>
+      </div>
+      <div class="knock" id="knock"></div>
       <div class="chart">
-        <div class="sec-h" style="margin-bottom:8px"><h3>Predicted callouts per 10 min</h3><span>red cells on map = next 30 min</span></div>
+        <div class="sec-h" style="margin-bottom:8px"><h3>Predicted calls for help per 10 min</h3><span>heatmap = next 30 min</span></div>
         ${svg}
-        <div class="lg"><span><i style="background:#ff4f61"></i>If nobody acts</span><span><i style="background:#3cd8a2"></i>If residents act on alerts</span></div>
+        <div class="lg"><span><i style="background:#ff4f61"></i>If nobody acts</span><span><i style="background:#3cd8a2"></i>With FlashGuard alerts</span></div>
       </div>
       <div class="sec">
-        <div class="sec-h"><h3>Pre-position now</h3><span>2 assets</span></div>
-        <div class="rec"><div class="top2"><b>Flood rescue crew to Brighton Rd and Glen Huntly Rd</b><span class="when">by 5:10 pm</span></div><p>Dry access from high ground into the Mitford St basin, where ${hot.find(s => s.name === 'Mitford St').homes} homes flood.</p></div>
-        <div class="rec"><div class="top2"><b>Sandbag trailer to Broadway</b><span class="when">by 5:00 pm</span></div><p>Broadway stays dry all evening and is a 6 minute walk for most at-risk households.</p></div>
+        <div class="sec-h"><h3>Pre-position now</h3><span>${P.prepos().length} actions</span></div>
+        ${P.prepos().map(r => `<div class="rec"><div class="top2"><b>${r[0]}</b><span class="when">${r[1]}</span></div><p>${r[2]}</p></div>`).join('')}
       </div>
       <div class="sec">
-        <div class="sec-h"><h3>Response priority</h3><span>ranked by life risk</span></div>
+        <div class="sec-h"><h3>Vulnerable sites</h3><span>ranked by time</span></div>
         <div class="rank">
-          <div class="rk" style="cursor:default"><span class="pill p1">P1</span><span><span class="nm">${lodge.name}</span><br><span class="ds">${lodge.people} residents, ground floor floods ${clock(lodge.tA)}. Doorknock and assist move upstairs by 5:05 pm.</span></span><span></span></div>
-          <div class="rk" style="cursor:default"><span class="pill p1">P1</span><span><span class="nm">${F.sites[3].name}</span><br><span class="ds">${F.sites[3].people} residents, many with low mobility. Floods ${clock(F.sites[3].tA)}.</span></span><span></span></div>
-          <div class="rk" style="cursor:default"><span class="pill p2">P2</span><span><span class="nm">Mitford St basin</span><br><span class="ds">Deepest water in the catchment, ${cm(me.peak)} peak. Expect car rescues if drivers try to leave late.</span></span><span></span></div>
-          <div class="rk" style="cursor:default"><span class="pill p2">P2</span><span><span class="nm">Close ${firstStreet.name}</span><br><span class="ds">First street to flood, ${clock(firstStreet.floodT)}. Barriers in place by ${clock(firstStreet.floodT - 15)}.</span></span><span></span></div>
-          <div class="rk" style="cursor:default"><span class="pill p3">P3</span><span><span class="nm">${F.sites[1].name}</span><br><span class="ds">Grounds flood ${clock(F.sites[1].tA)}, after pickup. Ask the school to close the oval gate.</span></span><span></span></div>
+          ${sitesSorted.map((s, i) => `<div class="rk" style="cursor:default"><span class="pill ${i < 2 ? 'p1' : 'p2'}">${i < 2 ? 'P1' : 'P2'}</span><span><span class="nm">${s.name}</span><br><span class="ds">${s.people} people, floods ${clock(s.tA)}. ${act[s.kind] || 'Warn and assist'} by ${clock(Math.max(F.NOW + 5, s.tA - 20))}.</span></span><span></span></div>`).join('')}
+          <div class="rk" style="cursor:default"><span class="pill p2">P2</span><span><span class="nm">Close ${D.first.name}</span><br><span class="ds">First street to flood, ${clock(D.first.floodT)}. Barriers in by ${clock(Math.max(F.NOW + 5, D.first.floodT - 15))}.</span></span><span></span></div>
         </div>
       </div>
-      <div class="toggles"><button class="tog" data-layer="heat" aria-pressed="${S.layers.heat}" style="--c:#ff784a"><i></i>Callout heatmap</button></div>
-      <p class="foot">Simulated scenario for demonstration. Terrain, rainfall and impacts are modelled, not live data.</p>`;
+      <div class="toggles"><button class="tog" data-layer="heat" aria-pressed="${S.layers.heat}" style="--c:#ff784a"><i></i>Calls-for-help heatmap</button></div>
+      ${foot}`;
     },
     futures() {
+      const hp = P.fut.hero === 'people';
       return `
       <div class="sec">
-        <div class="eyebrow">Two Futures · same storm</div>
-        <h2 class="h-display">The rain is identical. <em>What people do in the next 42 minutes is not.</em></h2>
-        <p class="lede">Drag the divider on the map. Left, everyone waits for the water. Right, FlashGuard's alerts go out at ${clock(F.ACT)} and people act on them.</p>
+        <div class="eyebrow">Two Futures · same ${C.river ? 'flood' : 'storm'}</div>
+        <h2 class="h-display">The ${C.river ? 'river' : 'rain'} is identical. <em>What people do in the next ${D.minsLeft} minutes is not.</em></h2>
+        <p class="lede">${P.fut.lede()}</p>
       </div>
       <div class="fut-hero">
-        <div class="eyebrow" id="futBy">Damage avoided by ${clock(S.t)}</div>
-        <div class="save"><span id="futSave">$0.0M</span></div>
-        <p id="futLine">in one evening, in one suburb.</p>
+        <div class="eyebrow" id="futBy"></div>
+        <div class="save"><span id="futSave">0</span></div>
+        <p id="futLine"></p>
       </div>
       <div class="vs">
         <div class="row"><span id="vsBy">By ${clock(S.t)}</span><span class="a">Waits</span><span class="b">Acts</span></div>
         <div class="row"><span>Homes flooded</span><span class="a" id="vH1">0</span><span class="b" id="vH2">0</span></div>
+        <div class="row"><span>People inside flooded homes</span><span class="a" id="vP1">0</span><span class="b" id="vP2">0</span></div>
         <div class="row"><span>Cars written off</span><span class="a" id="vC1">0</span><span class="b" id="vC2">0</span></div>
-        <div class="row"><span>SES callouts</span><span class="a" id="vS1">0</span><span class="b" id="vS2">0</span></div>
-        <div class="row"><span>People affected</span><span class="a" id="vP1">0</span><span class="b" id="vP2">0</span></div>
+        <div class="row"><span>Calls for help</span><span class="a" id="vS1">0</span><span class="b" id="vS2">0</span></div>
         <div class="row"><span>Damage</span><span class="a" id="vD1">$0</span><span class="b" id="vD2">$0</span></div>
       </div>
-      <div><button class="btn primary" id="runNight">Play the evening
+      <div class="vs">
+        <div class="row"><span>Rescue · whole night</span><span class="a">Waits</span><span class="b">Acts</span></div>
+        <div class="row"><span>Most urgent callers reached in</span><span class="a">${F.WAIT.A.p1} min</span><span class="b">${F.WAIT.B.p1} min</span></div>
+        <div class="row"><span>Calls still waiting at ${clock(F.T + 60)}</span><span class="a">${F.WAIT.A.unreached}</span><span class="b">${F.WAIT.B.unreached}</span></div>
+      </div>
+      <div><button class="btn primary" id="runNight">Play the ${C.river ? 'night' : 'evening'}
         <svg width="14" height="14" viewBox="0 0 18 18" aria-hidden="true"><path d="M5 3.5v11l9-5.5z" fill="currentColor"/></svg></button></div>
       <div class="sec">
         <div class="sec-h"><h3>What changed on the right</h3></div>
-        <ul class="acts">
-          <li><time>${clock(F.ACT)}</time><span><b>${fmt(F.OUT.A.people)} residents</b> in ${atRiskHomes.length} at-risk homes get a street-level alert with a countdown.</span></li>
-          <li><time>${clock(F.ACT + 4)}</time><span><b>${carsMoved} of ${F.cars.filter(c => c.tA !== null).length} cars</b> in the flood path move to higher ground.</span></li>
-          <li><time>${clock(F.ACT + 8)}</time><span>Council clears <b>blocked pits</b> on the top 3 hotspots and starts pumps early.</span></li>
-          <li><time>${clock(F.ACT + 10)}</time><span><b>${sandbagged} households</b> sandbag doors from the Broadway trailer.</span></li>
-          <li><time>${clock(F.ACT + 13)}</time><span>SES doorknocks <b>Elster Lodge</b> and stages a crew on dry ground.</span></li>
-        </ul>
+        <ul class="acts">${P.acts().map(a => `<li><time>${clock(a[0])}</time><span>${a[1]}</span></li>`).join('')}</ul>
       </div>
-      <p class="climate">Short, intense bursts like this are becoming more frequent as the climate warms, and drains built for last century's rain can't keep up. Adaptation is no longer only concrete. It is also what people do in the hour before.</p>
-      <p class="foot">Simulated scenario for demonstration. Terrain, rainfall and impacts are modelled, not live data.</p>`;
+      <p class="climate">${P.fut.climate}</p>
+      ${C.river ? '<p class="note">Hollow red squares on the right are flooded homes that people already left.</p>' : ''}
+      ${foot}`;
     },
   };
 
+  /* ---------- panel wiring ---------- */
+  const panel = $('#panel');
   function renderPanel() {
     panel.innerHTML = `<div class="view">${views[S.mode]()}</div>`;
     cdEl = $('#cd'); tickCountdown();
+    wirePanel(); updateDyn();
+  }
+  function wirePanel() {
     const rb = $('#routeBtn'); if (rb) rb.onclick = () => { S.route = !S.route; rb.setAttribute('aria-pressed', S.route); rb.textContent = S.route ? 'Hide safe route' : 'Show safe route'; };
     panel.querySelectorAll('.chk input').forEach(i => i.onchange = () => {
       i.checked ? S.checks.add(i.dataset.k) : S.checks.delete(i.dataset.k);
@@ -1051,48 +1429,125 @@ const FG = (() => {
     });
     panel.querySelectorAll('[data-street]').forEach(b => b.onclick = () => {
       const s = F.streets.find(x => x.name === b.dataset.street); S.hl = S.hl === s ? null : s;
-      panel.querySelectorAll('[data-street]').forEach(x => x.classList.toggle('on', S.hl && x.dataset.street === S.hl.name));
+      panel.querySelectorAll('[data-street]').forEach(x => x.classList.toggle('on', !!S.hl && x.dataset.street === S.hl.name));
       if (S.hl && S.t < S.hl.floodT) { S.t = Math.min(F.T, S.hl.floodT + 8); syncT(false); }
     });
     panel.querySelectorAll('[data-layer]').forEach(b => b.onclick = () => { const k = b.dataset.layer; S.layers[k] = !S.layers[k]; b.setAttribute('aria-pressed', S.layers[k]); });
+    panel.querySelectorAll('[data-lang]').forEach(b => b.onclick = () => { S.lang = b.dataset.lang; try { speechSynthesis.cancel(); } catch (e) { } const d = panel.querySelector('.deliver'); d.outerHTML = deliverHTML(); wirePanel(); });
+    const vb = $('#voiceBtn'); if (vb) vb.onclick = speak;
     const rn = $('#runNight'); if (rn) rn.onclick = () => play(F.NOW, F.T);
-    updateDyn();
+    wireCheckin();
+  }
+  function rerenderCheckin() { const el = $('#checkin'); if (el) { el.innerHTML = checkinHTML(); wireCheckin(); } }
+  function wireCheckin() {
+    const el = $('#checkin'); if (!el) return;
+    el.querySelectorAll('[data-ci]').forEach(b => b.onclick = () => {
+      const a = b.dataset.ci;
+      if (a === 'safe') S.checkin = 'safe';
+      else if (a === 'help') { S.checkin = 'form'; S.form = { people: 3, needs: new Set(), level: Math.round(S.t) >= F.me.floodT ? 'Knee' : 'Ankle' }; }
+      else if (a === 'reset') { S.checkin = null; }
+      else if (a === 'minus') { S.form.people = Math.max(1, S.form.people - 1); $('#ppl').textContent = S.form.people; return; }
+      else if (a === 'plus') { S.form.people = Math.min(12, S.form.people + 1); $('#ppl').textContent = S.form.people; return; }
+      else if (a === 'send') sendRequest();
+      else if (a === 'cancel') { F.REQ.B = F.REQ.B.filter(r => r.id !== 'me'); F.schedule(F.REQ.B, 'triage'); S.myReq = null; S.checkin = null; }
+      rerenderCheckin();
+    });
+    el.querySelectorAll('[data-need]').forEach(b => b.onclick = () => { const n = b.dataset.need; S.form.needs.has(n) ? S.form.needs.delete(n) : S.form.needs.add(n); b.setAttribute('aria-pressed', S.form.needs.has(n)); });
+    el.querySelectorAll('[data-level]').forEach(b => b.onclick = () => { S.form.level = b.dataset.level; el.querySelectorAll('[data-level]').forEach(x => x.setAttribute('aria-pressed', x.dataset.level === S.form.level)); });
+  }
+  function sendRequest() {
+    const fm = S.form, lv = { Ankle: .1, Knee: .45, Waist: .9, Chest: 1.3 }[fm.level];
+    F.REQ.B = F.REQ.B.filter(r => r.id !== 'me');
+    const r = { id: 'me', x: F.me.x, y: F.me.y, t: Math.max(F.NOW, Math.round(S.t)), people: fm.people, needs: [...fm.needs].filter(n => n !== 'Pets'), level: fm.level, peakDepth: Math.max(F.me.peak, lv), addr: F.me.label, you: true };
+    F.REQ.B.push(r); F.schedule(F.REQ.B, 'triage');
+    S.myReq = r; S.checkin = 'sent';
   }
 
   function cumulative(f, t) {
-    const homes = F.homes.filter(h => { const x = f === 'A' ? h.tA : h.tB; return x !== null && x <= t; }).length;
+    const hs = F.homes.filter(h => { const x = f === 'A' ? h.tA : h.tB; return x !== null && x <= t; });
+    const inside = f === 'B' ? hs.filter(h => !h.evac) : hs;
     const cars = F.cars.filter(c => c.tA !== null && c.tA <= t && !(f === 'B' && c.moved)).length;
-    const sites = F.sites.filter(s => s.tA !== null && s.tA <= t).length;
-    return { homes, cars, callouts: Math.round(homes * .55 + cars * .3 + sites * (f === 'A' ? 6 : 1)), people: Math.round(homes * 2.4), damage: homes * 78000 + cars * 21000 };
-  }
-  function updateDyn() {
-    if (S.mode !== 'futures' || !$('#vH1')) return;
-    const t = Math.round(S.t), a = cumulative('A', t), b = cumulative('B', t);
-    const set = (id, v) => { const e = $(id); if (e) e.textContent = v; };
-    set('#vH1', fmt(a.homes)); set('#vH2', fmt(b.homes)); set('#vC1', a.cars); set('#vC2', b.cars);
-    set('#vS1', a.callouts); set('#vS2', b.callouts); set('#vP1', fmt(a.people)); set('#vP2', fmt(b.people));
-    set('#vD1', money(a.damage)); set('#vD2', money(b.damage));
-    set('#futSave', money(a.damage - b.damage)); set('#futBy', `Damage avoided by ${clock(t)}`); set('#vsBy', `By ${clock(t)}`);
-    set('#futLine', a.homes ? `${fmt(a.homes - b.homes)} fewer homes flooded and ${a.callouts - b.callouts} fewer emergency callouts, in one suburb, in one evening.` : 'Nothing has flooded yet. Press play or drag the timeline.');
+    const calls = F.REQ[f].filter(r => r.t <= t && r.id !== 'me').length;
+    return { homes: hs.length, people: inside.reduce((s, h) => s + h.people, 0), cars, calls, damage: Math.round(hs.length * C.damageHome * (f === 'B' && C.river ? .85 : 1) + cars * C.damageCar) };
   }
 
-  /* ---------- tabs ---------- */
+  function updateDyn() {
+    const t = Math.round(S.t), set = (id, v) => { const e = $(id); if (e) e.innerHTML = v; };
+    if (S.mode === 'futures' && $('#vH1')) {
+      const a = cumulative('A', t), b = cumulative('B', t);
+      set('#vH1', fmt(a.homes)); set('#vH2', fmt(b.homes)); set('#vP1', fmt(a.people)); set('#vP2', fmt(b.people));
+      set('#vC1', a.cars); set('#vC2', b.cars); set('#vS1', a.calls); set('#vS2', b.calls);
+      set('#vD1', money(a.damage)); set('#vD2', money(b.damage)); set('#vsBy', `By ${clock(t)}`);
+      if (P.fut.hero === 'people') {
+        set('#futBy', `People kept out of floodwater by ${clock(t)}`); set('#futSave', fmt(a.people - b.people));
+        set('#futLine', a.homes ? `The same ${fmt(a.homes)} homes flood on both sides. On the right, most of them are empty, and ${fmt(a.calls - b.calls)} fewer people are calling for rescue.` : 'Nothing has flooded yet. Press play or drag the timeline.');
+      } else {
+        set('#futBy', `Damage avoided by ${clock(t)}`); set('#futSave', money(a.damage - b.damage));
+        set('#futLine', a.homes ? `${fmt(a.homes - b.homes)} fewer homes flooded and ${fmt(a.calls - b.calls)} fewer calls for rescue, in one suburb, in one evening.` : 'Nothing has flooded yet. Press play or drag the timeline.');
+      }
+    }
+    if (S.mode === 'ses' && $('#queue')) {
+      const live = F.REQ.B.filter(r => r.t <= t);
+      const waiting = live.filter(r => reqState(r, t) === 'waiting'), enroute = live.filter(r => reqState(r, t) === 'enroute');
+      const safeN = D.atRisk.filter(h => h.safeT !== null && h.safeT <= t).length + (S.checkin === 'safe' ? 1 : 0);
+      const silent = t < F.ACT ? 0 : D.atRisk.filter(h => h.deep && !(h.safeT !== null && h.safeT <= t) && !(h.req && h.req.t <= t)).length;
+      set('#kNeed', waiting.length + enroute.length); set('#kCrews', enroute.length); set('#kSafe', fmt(safeN)); set('#kSilent', fmt(silent));
+      const score = r => r.p + (t - r.t) * 1.2;
+      const shown = [...waiting.sort((a, b) => score(b) - score(a)), ...enroute.sort((a, b) => a.reach - b.reach), ...live.filter(r => reqState(r, t) === 'reached' && r.reach > t - 6)].slice(0, 7);
+      const you = S.myReq && live.includes(S.myReq) && !shown.includes(S.myReq) ? [S.myReq] : [];
+      set('#queue', [...you, ...shown].length ? [...you, ...shown].map(r => {
+        const st = reqState(r, t);
+        const sTxt = st === 'waiting' ? `<span class="st wait">Waiting ${t - r.t} min</span>` : st === 'enroute' ? `<span class="st go">${r.crew}<br>ETA ${Math.max(1, r.reach - t)} min</span>` : `<span class="st ok">Reached ${clock(r.reach)}</span>`;
+        return `<div class="rk${r.id === 'me' ? ' you' : ''}" style="cursor:default"><span class="pill ${r.prioLabel === 'P1' ? 'p1' : r.prioLabel === 'P2' ? 'p2' : 'p3'}">${r.prioLabel}</span><span><span class="nm">${r.addr}</span>${r.id === 'me' ? '<span class="youtag">YOU</span>' : ''}<br><span class="ds">${r.people} ${r.people === 1 ? 'person' : 'people'} · ${r.needs.length ? r.needs.join(', ') : 'no extra needs'} · ${r.level.toLowerCase()}-deep</span></span>${sTxt}</div>`;
+      }).join('') : `<div class="empty">No calls for help yet at ${clock(t)}. Drag the timeline forward or press play.</div>`);
+      set('#qTime', `${clock(t)} · ranked by risk, not call order`);
+      if (t < F.ACT) set('#knock', 'Check-ins open when the first alert goes out at ' + clock(F.ACT) + '.');
+      else {
+        const byStreet = {}; D.atRisk.filter(h => h.deep && !(h.safeT !== null && h.safeT <= t) && !(h.req && h.req.t <= t)).forEach(h => byStreet[h.street] = (byStreet[h.street] || 0) + 1);
+        const top = Object.entries(byStreet).sort((a, b) => b[1] - a[1])[0];
+        set('#knock', top ? `<b>Doorknock list · ${fmt(silent)} homes</b><br>They haven't replied to any alert and will have more than 30 cm of water inside. Start with ${top[0]} (${top[1]} homes).` : '<b>Everyone in deep water has replied.</b>');
+      }
+    }
+    if (S.mode === 'resident' && S.checkin === 'sent' && $('#myStatus')) { $('#myStatus').innerHTML = myStatusHTML(); wireCheckin(); }
+  }
+
+  /* ---------- tabs & places ---------- */
   const tabs = [...document.querySelectorAll('.tab')], ind = $('#tabInd');
-  function placeInd() { const a = tabs.find(t => t.getAttribute('aria-selected') === 'true'); ind.style.left = a.offsetLeft + 'px'; ind.style.width = a.offsetWidth + 'px'; }
+  function placeInd() { const a = tabs.find(t => t.getAttribute('aria-selected') === 'true'); if (a) { ind.style.left = a.offsetLeft + 'px'; ind.style.width = a.offsetWidth + 'px'; } }
+  function defaultT(m) { return m === 'resident' ? F.NOW : m === 'council' ? F.peakT - 6 : m === 'ses' ? F.me.floodT + 3 : F.peakT; }
+  function setHash() { try { history.replaceState(null, '', '#' + P.slug + '-' + S.mode); } catch (e) { } }
   function setMode(m, opts = {}) {
     S.mode = m; S.hl = null;
     tabs.forEach(t => t.setAttribute('aria-selected', t.dataset.mode === m)); placeInd();
     const fut = m === 'futures';
     ['#lblA', '#lblB', '#handle'].forEach(id => $(id).hidden = !fut);
-    if (fut) { S.split = .5; placeHandle(); if (!opts.keepT && S.t < 95) { S.t = 112; } }
-    if (m === 'council' && !opts.keepT && S.t < 90) S.t = 105;
-    if (m === 'ses' && !opts.keepT && S.t < 80) S.t = 88;
-    try { history.replaceState(null, '', '#' + m); } catch (e) { }
-    renderPanel(); syncT(false);
+    if (fut) { S.split = .5; placeHandle(); }
+    if (!opts.keepT) S.t = Math.max(S.t, defaultT(m));
+    setHash(); renderPanel(); syncT(false);
   }
   tabs.forEach(t => t.addEventListener('click', () => { setPlaying(false); setMode(t.dataset.mode); }));
 
-  /* ---------- split handle ---------- */
+  const plcBtns = [...document.querySelectorAll('.plc')];
+  function setPlace(id, opts = {}) {
+    S.place = id; C = FGE.places[id]; P = UI[id];
+    F = built[id] || (built[id] = FGE.build(C));
+    derive(); buildTerrain(); resize();
+    plcBtns.forEach(b => b.setAttribute('aria-pressed', b.dataset.place === id));
+    Object.assign(S, { t: F.NOW, route: false, checks: new Set(), checkin: null, myReq: null, hl: null, startReal: performance.now() });
+    F.REQ.B = F.REQ.B.filter(r => r.id !== 'me'); F.schedule(F.REQ.B, 'triage');
+    $('#liveRun').textContent = `Forecast run ${clock(F.NOW)}`;
+    $('#hudTag').textContent = P.tag;
+    $('#introWhen').textContent = P.when; $('#introL2').textContent = P.intro2; $('#introL3').innerHTML = P.intro3(D.minsLeft);
+    if (opts.announce) {
+      const pc = $('#placeCard'); pc.hidden = false; pc.innerHTML = `<span>${P.kind}</span><b>${P.card[0]}</b><p>${P.card[1]}</p>`;
+      pc.style.animation = 'none'; void pc.offsetWidth; pc.style.animation = '';
+      clearTimeout(setPlace.tm); setPlace.tm = setTimeout(() => pc.hidden = true, 2900);
+    }
+    setMode(opts.mode || S.mode);
+  }
+  plcBtns.forEach(b => b.addEventListener('click', () => { if (b.dataset.place === S.place) return; setPlaying(false); setPlace(b.dataset.place, { announce: true }); }));
+
+  /* split handle */
   const handle = $('#handle');
   function placeHandle() { handle.style.left = S.split * 100 + '%'; handle.setAttribute('aria-valuenow', Math.round(S.split * 100)); }
   let dragging = false;
@@ -1101,21 +1556,17 @@ const FG = (() => {
   handle.addEventListener('pointermove', e => dragging && moveSplit(e));
   handle.addEventListener('pointerup', () => dragging = false);
   handle.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') S.split = Math.max(.04, S.split - .05); else if (e.key === 'ArrowRight') S.split = Math.min(.96, S.split + .05); else return; e.preventDefault(); placeHandle(); });
-  stage.addEventListener('click', e => { if (S.mode === 'futures' && e.target === cv) { moveSplit(e); } });
+  stage.addEventListener('click', e => { if (S.mode === 'futures' && e.target === cv) moveSplit(e); });
 
-  /* ---------- intro ---------- */
+  /* intro */
   const intro = $('#intro'), ir = $('#introRain'), ictx = ir.getContext('2d');
   let introOpen = true;
   function sizeIntro() { ir.width = innerWidth * dpr; ir.height = innerHeight * dpr; }
-  function introRainFrame(dt) {
-    ictx.setTransform(dpr, 0, 0, dpr, 0, 0); ictx.clearRect(0, 0, innerWidth, innerHeight);
-    drawRain(ictx, innerWidth, innerHeight, peakRain * .8, dt);
-  }
   function closeIntro(auto = true) {
     if (!introOpen) return; introOpen = false; intro.classList.add('gone');
     S.startReal = performance.now();
     setMode('resident', { keepT: true }); S.t = F.NOW; syncT(false);
-    if (auto && !matchMedia('(prefers-reduced-motion: reduce)').matches) setTimeout(() => play(F.NOW, me.floodT + 6), 900);
+    if (auto && !matchMedia('(prefers-reduced-motion: reduce)').matches) setTimeout(() => play(F.NOW, F.me.floodT + 6), 900);
   }
   function openIntro() {
     setPlaying(false); introOpen = true; intro.classList.remove('gone');
@@ -1127,13 +1578,29 @@ const FG = (() => {
   $('#replay').onclick = openIntro;
   document.addEventListener('keydown', e => { if (introOpen && e.key === 'Escape') closeIntro(false); });
 
-  /* ---------- boot ---------- */
+  /* loop */
+  let last = performance.now();
+  function frame(now) {
+    const dt = Math.min(.05, (now - last) / 1000); last = now; const time = now / 1000;
+    if (S.playing) {
+      S.t = Math.min(F.T, S.t + dt * 11);
+      if (S.t >= S.stopAt) { S.t = S.stopAt; setPlaying(false); }
+      syncT(false);
+    }
+    if (!introOpen) render(time, dt);
+    else { ictx.setTransform(dpr, 0, 0, dpr, 0, 0); ictx.clearRect(0, 0, innerWidth, innerHeight); drawRain(ictx, innerWidth, innerHeight, 60, 75, dt); }
+    tickCountdown();
+    requestAnimationFrame(frame);
+  }
+
+  /* boot */
   window.addEventListener('resize', () => { resize(); sizeIntro(); placeInd(); });
-  dpr = Math.min(2, window.devicePixelRatio || 1);
-  sizeIntro(); resize();
-  const startMode = (location.hash || '').slice(1);
-  if (['resident', 'council', 'ses', 'futures'].includes(startMode)) { introOpen = false; intro.classList.add('gone'); setMode(startMode); }
-  else setMode('resident', { keepT: true });
+  dpr = Math.min(2, window.devicePixelRatio || 1); sizeIntro();
+  const tok = (location.hash || '').slice(1).split('-');
+  const startPlace = tok.includes('lismore') ? 'lis' : 'melb';
+  const startMode = ['resident', 'council', 'ses', 'futures'].find(m => tok.includes(m));
+  if (startMode || tok.includes('lismore')) { introOpen = false; intro.classList.add('gone'); }
+  setPlace(startPlace, { mode: startMode || 'resident' });
   if (document.fonts) document.fonts.ready.then(() => { placeInd(); drawTimeline(); });
   requestAnimationFrame(frame);
 })();
